@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">StationaryHutPro</string>
+    <string name="sign_in_headline">Sign in to access your Orders,\nWishlist and Recommendations.</string>
+    <string name="Rs">\u20B9</string>
+    <string name="cartEmpty">My cart is empty !</string>
+</resources>

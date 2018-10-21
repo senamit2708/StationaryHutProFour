@@ -1,0 +1,64 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: "androidx.navigation.safeargs"
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.example.senamit.stationaryhutpro"
+        minSdkVersion 15
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    //lifecycle version
+    def lifecycle_version = "2.0.0-beta01"
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
+    implementation 'androidx.drawerlayout:drawerlayout:1.0.0-beta01'
+    //    implementation 'com.android.support:appcompat-v7:27.1.1'
+    //    implementation 'com.android.support:appcompat-v7:28.0.0-alpha3'
+    //    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    //    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.google.android.material:material:1.0.0-beta01'
+    //    testImplementation 'junit:junit:4.12'
+    //    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    //    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    //material design
+    implementation 'com.google.firebase:firebase-core:16.0.0'
+    implementation 'com.google.firebase:firebase-auth:16.0.2'
+    implementation 'com.google.firebase:firebase-storage:16.0.1'
+    implementation 'com.google.firebase:firebase-database:16.0.1'
+    //navigation
+    implementation 'android.arch.navigation:navigation-fragment:' + rootProject.navigationVersion
+    implementation 'android.arch.navigation:navigation-ui:' + rootProject.navigationVersion
+    //view model
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0-alpha1'
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.0.0-alpha1"
+    implementation 'com.squareup.picasso:picasso:2.3.3'
+    implementation 'com.github.bumptech.glide:glide:3.5.2'
+
+}
+
+// paste json file of firebase else it will give google-service.json exception.
+apply plugin: 'com.google.gms.google-services'

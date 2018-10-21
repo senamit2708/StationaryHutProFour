@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/productForSaleView">
+
+    <fragment
+        android:id="@+id/productForSaleView"
+        android:name="com.example.senamit.stationaryhutpro.fragments.ProductForSaleView"
+        android:label="Products"
+        tools:layout="@layout/activity_product_for_sale_view">
+        <action
+            android:id="@+id/action_productForSaleView_to_productDescription"
+            app:destination="@id/productDescription" />
+    </fragment>
+    <fragment
+        android:id="@+id/productDescription"
+        android:name="com.example.senamit.stationaryhutpro.fragments.ProductDescription"
+        android:label="Product Description"
+        tools:layout="@layout/activity_product_description">
+        <action
+            android:id="@+id/action_productDescription_to_cartProduct"
+            app:destination="@id/cartProduct" />
+    </fragment>
+    <fragment
+        android:id="@+id/cartProduct"
+        android:name="com.example.senamit.stationaryhutpro.fragments.CartProduct"
+        android:label="Cart"
+        tools:layout="@layout/activity_cart_product">
+        <action
+            android:id="@+id/action_cartProduct_to_orderDelivery"
+            app:clearTask="false"
+            app:destination="@id/orderDelivery" />
+        <action
+            android:id="@+id/action_cartProduct_to_productForSaleView"
+            app:destination="@id/productForSaleView" />
+    </fragment>
+    <fragment
+        android:id="@+id/testFragmentOne"
+        android:name="com.example.senamit.stationaryhutpro.fragments.TestFragmentOne"
+        android:label="fragment_test_one"
+        tools:layout="@layout/fragment_test_one" />
+    <fragment
+        android:id="@+id/userAddressEntry"
+        android:name="com.example.senamit.stationaryhutpro.fragments.UserAddressEntry"
+        android:label="Edit Address"
+        tools:layout="@layout/activity_user_newaddress_entry"></fragment>
+    <fragment
+        android:id="@+id/userAddressView"
+        android:name="com.example.senamit.stationaryhutpro.fragments.UserAddressView"
+        android:label="Address"
+        tools:layout="@layout/activity_user_address_view">
+        <action
+            android:id="@+id/action_userAddressView_to_userAddressEntry"
+            app:destination="@id/userAddressEntry" />
+        <action
+            android:id="@+id/action_userAddressView_to_paymentSelection"
+            app:destination="@id/paymentSelection" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentSelection"
+        android:name="com.example.senamit.stationaryhutpro.fragments.PaymentSelection"
+        android:label="Payment"
+        tools:layout="@layout/activity_payment_selection">
+        <action
+            android:id="@+id/action_paymentSelection_to_orderDetails"
+            app:destination="@id/orderDetails"
+            app:popUpTo="@+id/productForSaleView" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderDetails"
+        android:name="com.example.senamit.stationaryhutpro.fragments.NewOrders"
+        android:label="New Orders"
+        tools:layout="@layout/activity_new_order_details" />
+    <fragment
+        android:id="@+id/userOrders"
+        android:name="com.example.senamit.stationaryhutpro.fragments.UserOrders"
+        android:label="Orders"
+        tools:layout="@layout/activity_all_orders" >
+        <action
+            android:id="@+id/action_userOrders_to_orderedProductDescription"
+            app:destination="@id/orderedProductDescription" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderDelivery"
+        android:name="com.example.senamit.stationaryhutpro.fragments.OrderDelivery"
+        android:label="OrderDelivery" >
+        <action
+            android:id="@+id/action_orderDelivery_to_paymentSelection"
+            app:destination="@id/paymentSelection" />
+        <action
+            android:id="@+id/action_orderDelivery_to_userAddressView"
+            app:clearTask="false"
+            app:destination="@id/userAddressView"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderedProductDescription"
+        android:name="com.example.senamit.stationaryhutpro.fragments.OrderedProductDescription"
+        android:label="activity_ordered_product_description"
+        tools:layout="@layout/activity_ordered_product_description" />
+    <fragment
+        android:id="@+id/userAccount"
+        android:name="com.example.senamit.stationaryhutpro.fragments.UserAccount"
+        android:label="My Account"
+        tools:layout="@layout/activity_user_account">
+        <action
+            android:id="@+id/action_userAccount_to_userOrders"
+            app:destination="@id/userOrders" />
+        <action
+            android:id="@+id/action_userAccount_to_userAccountAddress"
+            app:destination="@id/userAccountAddress" />
+        <action
+            android:id="@+id/action_userAccount_to_userProfile"
+            app:destination="@id/userProfile" />
+    </fragment>
+    <fragment
+        android:id="@+id/userAccountAddress"
+        android:name="com.example.senamit.stationaryhutpro.fragments.UserAccountAddress"
+        android:label="activity_user_account_address"
+        tools:layout="@layout/activity_user_account_address" >
+        <action
+            android:id="@+id/action_userAccountAddress_to_userAddressEntry"
+            app:destination="@id/userAddressEntry" />
+    </fragment>
+    <fragment
+        android:id="@+id/userProfile"
+        android:name="com.example.senamit.stationaryhutpro.fragments.UserProfile"
+        android:label="Edit Profile"
+        tools:layout="@layout/activity_user_profile"></fragment>
+    <fragment
+        android:id="@+id/navDrawerStationaryItem"
+        android:name="com.example.senamit.stationaryhutpro.fragments.NavDrawerStationaryItem"
+        android:label="Stationary item"
+        tools:layout="@layout/activity_navdrawer_stationaryitem" >
+        <action
+            android:id="@+id/action_navDrawerStationaryItem_to_categoryProductView"
+            app:destination="@id/categoryProductView" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryProductView"
+        android:name="com.example.senamit.stationaryhutpro.fragments.CategoryProductView"
+        android:label="activity_category_product_view"
+        tools:layout="@layout/activity_category_product_view" >
+        <action
+            android:id="@+id/action_categoryProductView_to_productDescription"
+            app:destination="@id/productDescription" />
+        <action
+            android:id="@+id/action_categoryProductView_to_productFilter"
+            app:destination="@id/productFilter" />
+    </fragment>
+    <fragment
+        android:id="@+id/productFilter"
+        android:name="com.example.senamit.stationaryhutpro.fragments.ProductFilter"
+        android:label="activity_product_filter"
+        tools:layout="@layout/activity_product_filter" />
+</navigation>
