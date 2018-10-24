@@ -155,12 +155,12 @@ public class CategoryProductView extends Fragment implements View.OnClickListene
     }
 
     private void productFilter() {
+        mViewModel.setProductCategoryName(productCategory);
         Navigation.findNavController(getActivity(), R.id.btnFilter).navigate(R.id.action_categoryProductView_to_productFilter);
     }
 
     private void sortProduct() {
         mFrameLayout.setVisibility(View.VISIBLE);
     }
-
 
 }

@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 
 import com.example.senamit.stationaryhutpro.R;
 import com.example.senamit.stationaryhutpro.adapters.NavDrawerItemAdapter;
+import com.example.senamit.stationaryhutpro.interfaces.ProductCategoryInterface;
 import com.example.senamit.stationaryhutpro.models.ProductCategory;
 import com.example.senamit.stationaryhutpro.viewModels.NavDrawerItemViewModel;
+import com.example.senamit.stationaryhutpro.viewModels.ProductCategoryViewModel;
 
 import java.util.List;
 
@@ -22,7 +24,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class NavDrawerStationaryItem extends Fragment {
+public class NavDrawerStationaryItem extends Fragment implements ProductCategoryInterface{
 
     private static final String TAG = NavDrawerStationaryItem.class.getSimpleName();
 
@@ -31,11 +33,14 @@ public class NavDrawerStationaryItem extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private NavDrawerItemAdapter mAdapter;
     private NavDrawerItemViewModel mViewModel;
+    private ProductCategoryViewModel mCategoryViewModel;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mViewModel = ViewModelProviders.of(getActivity()).get(NavDrawerItemViewModel.class);
+        mCategoryViewModel = ViewModelProviders.of(getActivity()).get(ProductCategoryViewModel.class);
     }
 
     @Nullable
@@ -51,7 +56,7 @@ public class NavDrawerStationaryItem extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView = view.findViewById(R.id.recycler);
         mLayoutManager = new LinearLayoutManager(context);
-        mAdapter = new NavDrawerItemAdapter(context);
+        mAdapter = new NavDrawerItemAdapter(context, this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -63,5 +68,10 @@ public class NavDrawerStationaryItem extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void funSetProductCategory(String productCategory) {
+//        mCategoryViewModel.setProductCategoryName(productCategory);
     }
 }

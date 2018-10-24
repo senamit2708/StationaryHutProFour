@@ -153,5 +153,9 @@
         android:id="@+id/productFilter"
         android:name="com.example.senamit.stationaryhutpro.fragments.ProductFilter"
         android:label="activity_product_filter"
-        tools:layout="@layout/activity_product_filter" />
+        tools:layout="@layout/activity_product_filter" >
+        <action
+            android:id="@+id/action_productFilter_to_categoryProductView"
+            app:destination="@id/categoryProductView" />
+    </fragment>
 </navigation>

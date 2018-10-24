@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.senamit.stationaryhutpro.R;
+import com.example.senamit.stationaryhutpro.interfaces.ProductCategoryInterface;
 import com.example.senamit.stationaryhutpro.models.ProductCategory;
 
 import java.util.List;
@@ -22,9 +23,11 @@ public class NavDrawerItemAdapter extends RecyclerView.Adapter<NavDrawerItemAdap
     private static final String TAG = NavDrawerItemAdapter.class.getSimpleName();
     private Context context;
     private List<ProductCategory> productCategories;
+    private ProductCategoryInterface mInterface;
 
-    public NavDrawerItemAdapter(Context context) {
+    public NavDrawerItemAdapter(Context context, ProductCategoryInterface mInterface) {
         this.context = context;
+        this.mInterface = mInterface;
     }
 
     @NonNull
@@ -74,6 +77,7 @@ public class NavDrawerItemAdapter extends RecyclerView.Adapter<NavDrawerItemAdap
             Log.i(TAG, "the product category in adapter is "+productCategory);
             Bundle bundle = new Bundle();
             bundle.putString("productCategory", productCategory);
+            mInterface.funSetProductCategory(productCategory);
             Navigation.findNavController(view).navigate(R.id.action_navDrawerStationaryItem_to_categoryProductView, bundle);
         }
     }

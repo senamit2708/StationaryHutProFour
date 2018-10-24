@@ -10,10 +10,13 @@ import com.example.senamit.stationaryhutpro.R;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 public class ProductFilter extends Fragment {
 
     private static final String TAG = ProductFilter.class.getSimpleName();
+    private FilterDetails filterDetails;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,5 +33,11 @@ public class ProductFilter extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.framelayoutDetails, new FilterDetails());
+        fragmentTransaction.commit();
     }
+
+
 }

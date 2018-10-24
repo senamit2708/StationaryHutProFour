@@ -119,14 +119,14 @@ public class CartProduct extends Fragment implements CartProductAdapter.ButtonCl
                         mAdapter.setCartProduct(userCarts);
                         int size  = userCartProduct.size();
                         int totalPrice =0;
-                        for (int i=0;i<size; i++){
-                            int quantity = userCartProduct.get(i).getQuantity();
-                            //i think here issue occurs if internet is slow...cross check i have to do here
-                            //i m thinking to use try catch block or something else...
-                            int productPrice = Integer.parseInt(userCartProduct.get(i).getProductPrice());
-                            int price = quantity * productPrice;
-                            totalPrice= totalPrice+price;
-                        }
+//                        for (int i=0;i<size; i++){
+//                            int quantity = userCartProduct.get(i).getQuantity();
+//                            //i think here issue occurs if internet is slow...cross check i have to do here
+//                            //i m thinking to use try catch block or something else...
+//                            int productPrice = Integer.parseInt(userCartProduct.get(i).getProductPrice());
+//                            int price = quantity * productPrice;
+//                            totalPrice= totalPrice+price;
+//                        }
                         txtTotalItemCount.setText("Price("+size+" items)");
                         txtItemFinalPrice.setText(String.valueOf(totalPrice));
                         if (totalPrice<minTotalPrice){
