@@ -11,11 +11,11 @@ public class Product {
 
     String productName;
     String productNumber;
-    String productPrice;
+    int productPrice;
     String imageUrl;
     String category;
 
-    public Product(String productName, String productNumber, String productPrice, String imageUrl) {
+    public Product(String productName, String productNumber, int productPrice, String imageUrl) {
         this.productName = productName;
         this.productNumber = productNumber;
         this.productPrice = productPrice;
@@ -23,7 +23,7 @@ public class Product {
 
     }
 
-    public Product(String productName, String productNumber, String productPrice, String imageUrl, String category) {
+    public Product(String productName, String productNumber, int productPrice, String imageUrl, String category) {
         this.productName = productName;
         this.productNumber = productNumber;
         this.productPrice = productPrice;
@@ -50,11 +50,11 @@ public class Product {
         this.productNumber = productNumber;
     }
 
-    public String getProductPrice() {
+    public int getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(String productPrice) {
+    public void setProductPrice(int productPrice) {
         this.productPrice = productPrice;
     }
 

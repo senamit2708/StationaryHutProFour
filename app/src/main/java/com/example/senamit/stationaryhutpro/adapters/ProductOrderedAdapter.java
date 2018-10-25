@@ -41,14 +41,14 @@ public class ProductOrderedAdapter extends RecyclerView.Adapter<ProductOrderedAd
         Log.i(TAG, "inside onbind view holder "+mOrderList.get(position).getProductNumber());
         Picasso.with(context).load(mOrderList.get(position).getImageUrl()).into(holder.imageProduct);
         holder.txtProductName.setText(mOrderList.get(position).getProductName());
-        holder.txtProductPrice.setText(mOrderList.get(position).getProductPrice());
+        holder.txtProductPrice.setText(Integer.toString(mOrderList.get(position).getProductPrice()));
         holder.txtProductNumber.setText(mOrderList.get(position).getProductNumber());
         holder.txtProductQuantity.setText(Integer.toString(mOrderList.get(position).getQuantity()));
         holder.txtProductOrderStatus.setText(mOrderList.get(position).getOrderStatus());
         holder.txtOrderNumber.setText(mOrderList.get(position).getOrderNumber());
         holder.txtProductOrderedDate.setText(mOrderList.get(position).getDate());
         int quantity = mOrderList.get(position).getQuantity();
-        int price = Integer.parseInt(mOrderList.get(position).getProductPrice());
+        int price = mOrderList.get(position).getProductPrice();
         int totalPrice = (quantity * price);
         Log.i(TAG,"the total price is "+totalPrice);
         holder.txtTotalQuantity.setText("Total price of ("+quantity+" items)");

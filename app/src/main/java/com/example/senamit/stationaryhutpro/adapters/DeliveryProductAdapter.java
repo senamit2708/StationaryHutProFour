@@ -43,12 +43,12 @@ public class DeliveryProductAdapter extends RecyclerView.Adapter<DeliveryProduct
         if (cartProductList!= null){
             Log.i(TAG, "inside onBindViewHolder "+cartProductList.get(position).getProductNumber());
             holder.txtProductNumber.setText(cartProductList.get(position).getProductNumber());
-            holder.txtProductPrice.setText(cartProductList.get(position).getProductPrice());
+            holder.txtProductPrice.setText(Integer.toString(cartProductList.get(position).getProductPrice()));
             holder.txtProductName.setText(cartProductList.get(position).getProductName());
             holder.txtProductQuantity.setText(Integer.toString(cartProductList.get(position).getQuantity()));
             Picasso.with(context).load(cartProductList.get(position).getImageUrl()).into(holder.imageProduct);
             int quantity = cartProductList.get(position).getQuantity();
-            int price = Integer.parseInt(cartProductList.get(position).getProductPrice());
+            int price = cartProductList.get(position).getProductPrice();
             int totalPrice = (quantity * price);
             Log.i(TAG,"the total price is "+totalPrice);
             holder.txtTotalQuantity.setText("Total price of ("+quantity+" items)");

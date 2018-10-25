@@ -122,7 +122,7 @@ public class OrderedProductDescription extends Fragment {
         txtPaymentMode.setText(userCart.getPaymentMode());
 //        txtProductTotalPrice.setText(userCart.getProductPrice());
         int quantity = userCart.getQuantity();
-        int price = Integer.parseInt(userCart.getProductPrice());
+        int price = userCart.getProductPrice();
         int totalPrice = (quantity * price);
         Log.i(TAG, "total price of product is "+totalPrice);
         Log.i(TAG,"the total price is "+totalPrice);

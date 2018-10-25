@@ -11,7 +11,7 @@ public class UserCart {
 
     private String productNumber;
     private String date;
-    private String productPrice;
+    private int productPrice;
     private String productName;
     private String imageUrl;
     private int quantity;
@@ -25,12 +25,12 @@ public class UserCart {
         this.productNumber = productNumber;
     }
 
-    public UserCart(String productNumber, String productPrice) {
+    public UserCart(String productNumber, int productPrice) {
         this.productNumber = productNumber;
         this.productPrice = productPrice;
     }
 
-    public UserCart(String productNumber, String date, String productPrice, String productName, String imageUrl) {
+    public UserCart(String productNumber, String date, int productPrice, String productName, String imageUrl) {
         this.productNumber = productNumber;
         this.date = date;
         this.productPrice = productPrice;
@@ -38,7 +38,7 @@ public class UserCart {
         this.imageUrl = imageUrl;
     }
 
-    public UserCart(String productNumber, String date, String productPrice, String productName, String imageUrl, int quantity) {
+    public UserCart(String productNumber, String date, int productPrice, String productName, String imageUrl, int quantity) {
         this.productNumber = productNumber;
         this.date = date;
         this.productPrice = productPrice;
@@ -47,7 +47,7 @@ public class UserCart {
         this.quantity = quantity;
     }
 
-    public UserCart(String productNumber, String date, String productPrice, String productName, String imageUrl, int quantity, String orderStatus, String cartProductKey, String paymentMode) {
+    public UserCart(String productNumber, String date, int productPrice, String productName, String imageUrl, int quantity, String orderStatus, String cartProductKey, String paymentMode) {
         this.productNumber = productNumber;
         this.date = date;
         this.productPrice = productPrice;
@@ -79,11 +79,11 @@ public class UserCart {
         this.date = date;
     }
 
-    public String getProductPrice() {
+    public int getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(String productPrice) {
+    public void setProductPrice(int productPrice) {
         this.productPrice = productPrice;
     }
 

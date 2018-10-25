@@ -58,7 +58,7 @@ public class ProductDescription extends Fragment implements View.OnClickListener
     private Context context;
     private String mProductNumber;
     private String mProductName;
-    private String mProductPrice;
+    private int mProductPrice;
     private String mImageUrl;
     private int clickedItemIndex;
     private Product product;
@@ -138,7 +138,7 @@ public class ProductDescription extends Fragment implements View.OnClickListener
                     mProductPrice = product.getProductPrice();
                     mImageUrl = product.getImageUrl();
                     mTxtProductName.setText(product.getProductName());
-                    mTxtProductPrice.setText(product.getProductPrice());
+                    mTxtProductPrice.setText(Integer.toString(product.getProductPrice()));
                     mTxtProductNumber.setText(product.getProductNumber());
 
                     Picasso.with(context).load(product.getImageUrl()).into(mProductImage);

@@ -96,7 +96,7 @@ public class OrderDelivery extends Fragment {
                     int totalPrice =0;
                     for (int i=0;i<size; i++){
                         int quantity = userCartProduct.get(i).getQuantity();
-                        int productPrice = Integer.parseInt(userCartProduct.get(i).getProductPrice());
+                        int productPrice = userCartProduct.get(i).getProductPrice();
                         int price = quantity * productPrice;
                         totalPrice= totalPrice+price;
                     }

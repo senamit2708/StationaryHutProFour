@@ -46,7 +46,7 @@ public class CategoryProductAdapter extends RecyclerView.Adapter<CategoryProduct
         if (product!= null){
             holder.txtProductNumber.setText(product.get(position).getProductNumber());
             holder.txtProductName.setText(product.get(position).getProductName());
-            holder.txtProductPrice.setText(product.get(position).getProductPrice());
+            holder.txtProductPrice.setText(Integer.toString(product.get(position).getProductPrice()));
             String imageUrl = product.get(position).getImageUrl();
             Picasso.with(context).load(imageUrl).into(holder.imageProduct);
             Log.i(TAG, "the position is "+position);
