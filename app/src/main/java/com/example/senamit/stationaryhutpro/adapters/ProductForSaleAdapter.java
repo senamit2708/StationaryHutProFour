@@ -51,7 +51,8 @@ public class ProductForSaleAdapter extends RecyclerView.Adapter<ProductForSaleAd
             holder.txtProductName.setText(product.get(position).getProductName());
             holder.txtProductPrice.setText(Integer.toString(product.get(position).getProductPrice()));
             String imageUrl = product.get(position).getImageUrl();
-            Picasso.with(context).load(imageUrl).into(holder.imageProduct);
+            Picasso.with(context).load(imageUrl)
+                    .placeholder(R.color.placeHolderTwo).into(holder.imageProduct);
             Log.i(TAG, "the position is "+position);
             Log.i(TAG, "the imageUrl is  "+imageUrl);
             Log.i(TAG, "the product number is "+product.get(position).getProductNumber());
