@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.example.senamit.stationaryhutpro.R;
 import com.example.senamit.stationaryhutpro.adapters.ProductOrderedAdapter;
+import com.example.senamit.stationaryhutpro.interfaces.OrderedProductDescInterface;
 import com.example.senamit.stationaryhutpro.models.Address;
 import com.example.senamit.stationaryhutpro.models.UserCart;
 import com.example.senamit.stationaryhutpro.viewModels.OrderedProductViewModel;
@@ -37,7 +38,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class NewOrders extends Fragment {
+public class NewOrders extends Fragment implements OrderedProductDescInterface {
 
     private static final String TAG = NewOrders.class.getSimpleName();
 
@@ -94,7 +95,7 @@ public class NewOrders extends Fragment {
 
         mRecyclerView = view.findViewById(R.id.recycler_order);
         mLayoutManager = new LinearLayoutManager(context);
-        mAdapter = new ProductOrderedAdapter(context);
+        mAdapter = new ProductOrderedAdapter(context,this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -182,6 +183,11 @@ public class NewOrders extends Fragment {
              }
             }
         });
+    }
+
+    @Override
+    public void funOrderdProductSelection(String cartProductKey) {
+        mViewModel.setSelectedCartProductForDesc(cartProductKey);
     }
 
 

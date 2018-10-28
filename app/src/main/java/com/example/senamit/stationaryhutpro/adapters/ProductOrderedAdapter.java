@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.senamit.stationaryhutpro.R;
+import com.example.senamit.stationaryhutpro.interfaces.OrderedProductDescInterface;
 import com.example.senamit.stationaryhutpro.models.UserCart;
 import com.squareup.picasso.Picasso;
 
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ProductOrderedAdapter extends RecyclerView.Adapter<ProductOrderedAdapter.ViewHolder> {
@@ -24,8 +26,16 @@ public class ProductOrderedAdapter extends RecyclerView.Adapter<ProductOrderedAd
     private Context context;
     private List<UserCart> mOrderList = new ArrayList<>();
 
+    private OrderedProductDescInterface orderedProductDescInterface;
+
+
     public ProductOrderedAdapter(Context context) {
         this.context = context;
+    }
+
+    public ProductOrderedAdapter(Context context, OrderedProductDescInterface orderedProductDescInterface) {
+        this.context = context;
+        this.orderedProductDescInterface = orderedProductDescInterface;
     }
 
     @NonNull
@@ -76,7 +86,7 @@ public class ProductOrderedAdapter extends RecyclerView.Adapter<ProductOrderedAd
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView txtProductName;
         TextView txtProductNumber;
         TextView txtProductPrice;
@@ -100,6 +110,17 @@ public class ProductOrderedAdapter extends RecyclerView.Adapter<ProductOrderedAd
             txtTotalPrice = itemView.findViewById(R.id.txtTotalPrice);
             txtTotalQuantity = itemView.findViewById(R.id.txtTotalQuantity);
             txtOrderNumber = itemView.findViewById(R.id.txtOrderNumber);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+            String cartProductFirebaseKey = mOrderList.get(position).getCartProductKey();
+            orderedProductDescInterface.funOrderdProductSelection(cartProductFirebaseKey);
+            Navigation.findNavController(view).navigate(R.id.action_orderDetails_to_orderedProductDescription);
+
 
         }
     }

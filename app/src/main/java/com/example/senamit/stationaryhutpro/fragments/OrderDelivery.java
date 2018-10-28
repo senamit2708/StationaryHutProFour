@@ -39,6 +39,14 @@ public class OrderDelivery extends Fragment {
 
     private Button btnPayment;
     private TextView txtTotalPrice;
+    private TextView txtTotalItemCount;
+    private TextView txtItemFinalPrice;
+    private TextView txtDeliveryPrice;
+    private TextView txtFinalPrice;
+
+    private int deliveryCharge = 50;
+    private int minTotalPrice = 500;
+    private TextView txtShippingHint;
 //    private Button btnAddress;
 
     private RecyclerView mRecyclerView;
@@ -74,8 +82,13 @@ public class OrderDelivery extends Fragment {
         mUserId = mFirebaseUser.getUid();
 
         btnPayment =  view.findViewById(R.id.btnPayment);
-        txtTotalPrice = view.findViewById(R.id.txtTotalPrice);
 //        btnAddress = view.findViewById(R.id.btnAddress);
+        txtTotalPrice = view.findViewById(R.id.txtTotalPrice);
+        txtTotalItemCount = view.findViewById(R.id.txtTotalItemCount);
+        txtItemFinalPrice = view.findViewById(R.id.txtItemFinalPrice);
+        txtDeliveryPrice = view.findViewById(R.id.txtDeliveryPrice);
+        txtFinalPrice = view.findViewById(R.id.txtFinalPrice);
+        txtShippingHint = view.findViewById(R.id.txtShippingHint);
 
         mRecyclerView = view.findViewById(R.id.recycler_cart);
         mLayoutManager = new LinearLayoutManager(context);
@@ -96,11 +109,27 @@ public class OrderDelivery extends Fragment {
                     int totalPrice =0;
                     for (int i=0;i<size; i++){
                         int quantity = userCartProduct.get(i).getQuantity();
+                        //i think here issue occurs if internet is slow...cross check i have to do here
+                        //i m thinking to use try catch block or something else...
                         int productPrice = userCartProduct.get(i).getProductPrice();
                         int price = quantity * productPrice;
                         totalPrice= totalPrice+price;
                     }
-                    txtTotalPrice.setText(String.valueOf(totalPrice));
+                    txtTotalItemCount.setText("Price("+size+" items)");
+                    txtItemFinalPrice.setText(String.valueOf(totalPrice));
+                    if (totalPrice<minTotalPrice){
+                        txtDeliveryPrice.setText(String.valueOf(deliveryCharge));
+                        int total = totalPrice+deliveryCharge;
+                        txtTotalPrice.setText(String.valueOf(total));
+                        txtFinalPrice.setText(String.valueOf(total));
+                        txtShippingHint.setText("Total price above "+getString(R.string.Rs)+""+minTotalPrice+" is of free delivery");
+                        txtShippingHint.setVisibility(View.VISIBLE);
+                    }else {
+                        txtTotalPrice.setText(String.valueOf(totalPrice));
+                        txtFinalPrice.setText(String.valueOf(totalPrice));
+                        txtDeliveryPrice.setText("Free");
+                        txtShippingHint.setVisibility(View.INVISIBLE);
+                    }
                 }
             }
         });

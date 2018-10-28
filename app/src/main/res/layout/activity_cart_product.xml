@@ -37,12 +37,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_cart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"
-            android:background="@color/colorBackground" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_cart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorBackground"
+                    android:nestedScrollingEnabled="false"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -183,18 +184,28 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
-                    <TextView
-                    android:id="@+id/txtShippingHint"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:text="txtHint"
-                    android:visibility="invisible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/textView25"
-                    app:layout_constraintTop_toBottomOf="@+id/txtDivider" />
+                        <TextView
+                            android:id="@+id/txtShippingHint"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="40dp"
+                            android:layout_marginLeft="40dp"
+                            android:layout_marginTop="4dp"
+                            android:text="txtHint"
+                            android:visibility="visible"
+                            app:layout_constraintStart_toEndOf="@+id/divider20"
+                            app:layout_constraintTop_toBottomOf="@+id/txtDivider" />
+
+                        <ImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="4dp"
+                            app:layout_constraintStart_toEndOf="@+id/divider20"
+                            app:layout_constraintTop_toBottomOf="@+id/txtDivider"
+                            app:srcCompat="@drawable/shipping_cart" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

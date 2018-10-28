@@ -36,6 +36,8 @@ class StationaryMainPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stationary_main_page)
+//        TypefaceUtil.overrideFont(applicationContext, "SERIF", "fonts/Rubik-Regular.ttf") // font from assets: "assets/fonts/Roboto-Regular.ttf
+
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)

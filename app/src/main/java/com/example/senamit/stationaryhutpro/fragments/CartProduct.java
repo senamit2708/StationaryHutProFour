@@ -2,6 +2,7 @@ package com.example.senamit.stationaryhutpro.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +38,7 @@ public class CartProduct extends Fragment implements CartProductAdapter.ButtonCl
 
     private Context context;
     private String mUserId;
+    private Typeface customFont;
     //    private UserCart userCart;
 
     private Button btnPayment;
@@ -103,6 +105,9 @@ public class CartProduct extends Fragment implements CartProductAdapter.ButtonCl
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
+        customFont = Typeface.createFromAsset(context.getAssets(), "fonts/Rubik-Bold.ttf");
+
+
 
 
         mViewModel.getCartData(mUserId).observe(this, new Observer<List<UserCart>>() {
@@ -140,7 +145,9 @@ public class CartProduct extends Fragment implements CartProductAdapter.ButtonCl
                             txtTotalPrice.setText(String.valueOf(totalPrice));
                             txtFinalPrice.setText(String.valueOf(totalPrice));
                             txtDeliveryPrice.setText("Free");
-                            txtShippingHint.setVisibility(View.INVISIBLE);
+                            txtShippingHint.setText("Yay! Free Deliver on this order");
+
+//                            txtShippingHint.setVisibility(View.INVISIBLE);
                         }
                     }else {
                         Log.i(TAG,"inside else statement of user cart");

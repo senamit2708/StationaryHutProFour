@@ -71,7 +71,11 @@
         android:id="@+id/orderDetails"
         android:name="com.example.senamit.stationaryhutpro.fragments.NewOrders"
         android:label="New Orders"
-        tools:layout="@layout/activity_new_order_details" />
+        tools:layout="@layout/activity_new_order_details" >
+        <action
+            android:id="@+id/action_orderDetails_to_orderedProductDescription"
+            app:destination="@id/orderedProductDescription" />
+    </fragment>
     <fragment
         android:id="@+id/userOrders"
         android:name="com.example.senamit.stationaryhutpro.fragments.UserOrders"
