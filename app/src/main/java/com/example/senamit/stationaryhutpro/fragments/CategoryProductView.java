@@ -42,6 +42,7 @@ public class CategoryProductView extends Fragment implements View.OnClickListene
 
     private Button btnSort;
     private Button btnFilter;
+    private Button btnClose;
     private FrameLayout mFrameLayout;
     private RadioGroup btnSortGroup;
 
@@ -88,6 +89,7 @@ public class CategoryProductView extends Fragment implements View.OnClickListene
 
         btnSort = view.findViewById(R.id.btnSort);
         btnFilter = view.findViewById(R.id.btnFilter);
+        btnClose = view.findViewById(R.id.btnClose);
         mFrameLayout = view.findViewById(R.id.frameforSort);
         btnSortGroup = view.findViewById(R.id.btnSortGroup);
 
@@ -95,6 +97,7 @@ public class CategoryProductView extends Fragment implements View.OnClickListene
 
         btnSort.setOnClickListener(this);
         btnFilter.setOnClickListener(this);
+        btnClose.setOnClickListener(this);
 
 
         mViewModel.getCategoryProduct(productCategory).observe(this, new Observer<List<Product>>() {
@@ -147,11 +150,17 @@ public class CategoryProductView extends Fragment implements View.OnClickListene
            case R.id.btnSort:
                sortProduct();
                break;
-            case R.id.btnFilter:
+           case R.id.btnFilter:
                 productFilter();
                 break;
-
+            case R.id.btnClose:
+                closeSortProduct();
+                break;
         }
+    }
+
+    private void closeSortProduct() {
+        mFrameLayout.setVisibility(View.INVISIBLE);
     }
 
     private void productFilter() {

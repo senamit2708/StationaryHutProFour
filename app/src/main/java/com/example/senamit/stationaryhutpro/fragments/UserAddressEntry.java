@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.senamit.stationaryhutpro.R;
@@ -21,8 +22,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,6 +37,7 @@ import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
@@ -53,11 +59,14 @@ public class UserAddressEntry extends Fragment {
     private EditText txtLandMark;
     private EditText txtCity;
     private EditText txtState;
+    private ImageView imageCheck;
     private Button btnSubmit;
+    private Button btnCheck;
 
     private UserAddressViewModel mViewModel;
     private Address editableAddress;
     private String firebaseKey;
+    private Boolean pincodeCheck= false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,10 +106,15 @@ public class UserAddressEntry extends Fragment {
         txtAddressPartTwo = view.findViewById(R.id.txtAddressPartTwo);
         txtCity = view.findViewById(R.id.txtCity);
         txtState = view.findViewById(R.id.txtState);
+        imageCheck = view.findViewById(R.id.imageCheck);
 //        txtLandMark = view.findViewById(R.id.txtLandMark);
         btnSubmit = view.findViewById(R.id.btnSubmit);
+        btnCheck = view.findViewById(R.id.btnCheckAvailablity);
+
          currentUser = mFirebaseAuth.getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        txtState.setKeyListener(null);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,6 +123,23 @@ public class UserAddressEntry extends Fragment {
                 firebaseAddressUpload(view);
                 }
                 ((StationaryMainPage)getActivity()).hideSoftKeyboard(view);
+
+            }
+        });
+
+        btnCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               if (checkPincode()){
+                   imageCheck.setVisibility(View.VISIBLE);
+                   imageCheck.setImageDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.check_circle));
+
+//                   Toast.makeText(context, "GREAT! We are providing service in this Pincode", Toast.LENGTH_SHORT).show();
+               }else {
+                   imageCheck.setVisibility(View.VISIBLE);
+                   imageCheck.setImageDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.ic_clear_black_24dp));
+//                   Toast.makeText(context, "Please enter correct Pincode", Toast.LENGTH_SHORT).show();
+               }
 
             }
         });
@@ -124,6 +155,44 @@ public class UserAddressEntry extends Fragment {
             txtState.setText(editableAddress.getState());
         }
 
+    }
+
+    private boolean checkPincode() {
+        final String pincode = txtPincode.getText().toString();
+        if (pincode.length()<6){
+            pincodeCheck=false;
+
+        }else {
+            DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("/ProductOtherItem/ShippingAdress/AdressPincode");
+//                    mDatabase.child("ProductOtherItem").child("ShippingAdress").child("AdressPincode");
+            Query query = databaseReference.orderByChild("pincode").equalTo(pincode);
+            Log.i(TAG, "the first link is "+databaseReference.toString());
+            Log.i(TAG, "the second link is "+query.toString());
+            query.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()){
+                        Log.i(TAG, "the pincode is available "+dataSnapshot.getValue());
+                        pincodeCheck=true;
+                        imageCheck.setImageDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.check_circle));
+
+                    }else {
+                        Log.i(TAG, "pincode is not available");
+                        pincodeCheck=false;
+                        imageCheck.setImageDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.ic_clear_black_24dp));
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+//                    pincodeCheck=false;
+                }
+            });
+
+//
+        }
+        return pincodeCheck;
     }
 
     private void firebaseAddressUpload(final View view) {
@@ -176,9 +245,15 @@ public class UserAddressEntry extends Fragment {
             check=1;
             txtMobileNumber.setError("Enter mobile number");
         }
-        if (TextUtils.isEmpty(txtPincode.getText())){
+        if (TextUtils.isEmpty(txtPincode.getText())|| pincodeCheck==false){
             check=1;
             txtPincode.setError("Enter correct pincode");
+        }
+        if (pincodeCheck==false){
+            if (!checkPincode()){
+                txtPincode.setError("Check pincode first");
+                check=1;
+            }
         }
         if (TextUtils.isEmpty(txtAddressPartOne.getText())){
             check=1;

@@ -72,7 +72,7 @@
         android:id="@+id/frameforSort"
         android:layout_width="0dp"
         android:layout_height="197dp"
-        android:visibility="invisible"
+        android:visibility="visible"
         android:background="@color/colorCardView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -135,6 +135,20 @@
                     android:text="Newest First"
                     android:id="@+id/btnNewest"/>
             </RadioGroup>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:text="Close"
+                android:textColor="@android:color/holo_red_light"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                app:layout_constraintBottom_toTopOf="@+id/divider26"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>

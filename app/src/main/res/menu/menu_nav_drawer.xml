@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <group android:id="@+id/menu_top">
     <item
-        android:id="@+id/productForSaleNotebook"
-        android:title="Notebook"/>
+        android:id="@+id/productForSaleView"
+        android:title="Home"/>
     <item
         android:id="@+id/navDrawerStationaryItem"
-        android:title="Stationary"/>
-
-
+        android:title="Shop by Category"/>
+    </group>
+<group android:id="@+id/menu_lower"
+    >
     <item
         android:id="@+id/testFragmentOne"
         android:title="FirstTest" />
@@ -23,5 +25,5 @@
     <item
         android:id="@+id/userAccount"
         android:title="My Account"/>
-
+</group>
 </menu>
