@@ -101,5 +101,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtProductName" />
 
+    <TextView
+        android:id="@+id/txtStock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:textColor="@android:color/holo_green_light"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtProductNumber" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

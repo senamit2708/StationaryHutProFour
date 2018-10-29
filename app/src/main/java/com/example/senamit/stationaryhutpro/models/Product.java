@@ -26,12 +26,14 @@ public class Product {
     }
 
     //in product description i m using this..
-    public Product(String productName, String productNumber, int productPrice, String imageUrl, int minimumOrder) {
+    public Product(String productName, String productNumber, int productPrice, String imageUrl,
+                   int minimumOrder, int productQuantity) {
         this.productName = productName;
         this.productNumber = productNumber;
         this.productPrice = productPrice;
         this.imageUrl = imageUrl;
         this.minimumOrder = minimumOrder;
+        this.productQuantity = productQuantity;
 
     }
 
@@ -44,8 +46,6 @@ public class Product {
     }
 
     //for getting price and available quantity from productcartviewmodel
-
-
     public Product(int productPrice, int availableQuantity) {
         this.productPrice = productPrice;
         this.productQuantity = availableQuantity;

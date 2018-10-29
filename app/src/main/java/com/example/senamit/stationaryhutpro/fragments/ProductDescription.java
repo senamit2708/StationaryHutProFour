@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -70,6 +71,7 @@ public class ProductDescription extends Fragment implements View.OnClickListener
     private TextView mTxtProductPrice;
     private TextView mTxtProductNumber;
     private ImageView mProductImage;
+    private TextView mTxtStock;
     private Button mBtnAddToCart;
     private Button mBtnBuyNow;
 
@@ -81,6 +83,7 @@ public class ProductDescription extends Fragment implements View.OnClickListener
     private FirebaseUser mFirebaseUser;
 
     private boolean showToast = false;
+    private int stock;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -111,6 +114,7 @@ public class ProductDescription extends Fragment implements View.OnClickListener
         mTxtProductName = view.findViewById(R.id.txtProductName);
         mTxtProductPrice = view.findViewById(R.id.txtProductPrice);
         mTxtProductNumber = view.findViewById(R.id.txtProductNumber);
+        mTxtStock = view.findViewById(R.id.txtStock);
         mProductImage = view.findViewById(R.id.imageProduct);
         mBtnAddToCart = view.findViewById(R.id.btnAddToCart);
         mBtnBuyNow = view.findViewById(R.id.btnBuyNow);
@@ -135,15 +139,30 @@ public class ProductDescription extends Fragment implements View.OnClickListener
                     Log.i(TAG, "inside onChanged method of livedata observer of product desc");
                     product= dataSnapshot.getValue(Product.class);
                     Log.i(TAG, "the product is "+product);
+                    mImageUrl = product.getImageUrl();
+                    Picasso.with(context).load(product.getImageUrl()).into(mProductImage);
                     mProductName = product.getProductName();
                     mProductPrice = product.getProductPrice();
-                    mImageUrl = product.getImageUrl();
                     mMinimumOrder = product.getMinimumOrder();
+                    stock = product.getProductQuantity();
                     mTxtProductName.setText(product.getProductName());
                     mTxtProductPrice.setText(Integer.toString(product.getProductPrice()));
                     mTxtProductNumber.setText(product.getProductNumber());
+                    //showing instock and out of stock option
+                    if (stock>0){
+                        mTxtStock.setText(R.string.inStock);
+                        mTxtStock.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
+                        mBtnAddToCart.setEnabled(true);
+                        mBtnBuyNow.setEnabled(true);
+                    }else {
+                        mTxtStock.setTextSize(TypedValue.COMPLEX_UNIT_SP,25);
+                        mTxtStock.setTextColor(getResources().getColor(R.color.red));
+                        mTxtStock.setText(R.string.outOfStock);
+                        mBtnAddToCart.setEnabled(false);
+                        mBtnBuyNow.setEnabled(false);
+                    }
 
-                    Picasso.with(context).load(product.getImageUrl()).into(mProductImage);
+
 
                 }
             }

@@ -11,6 +11,7 @@ import com.example.senamit.stationaryhutpro.R;
 import com.example.senamit.stationaryhutpro.adapters.ProductOrderedAdapter;
 import com.example.senamit.stationaryhutpro.interfaces.OrderedProductDescInterface;
 import com.example.senamit.stationaryhutpro.models.Address;
+import com.example.senamit.stationaryhutpro.models.Product;
 import com.example.senamit.stationaryhutpro.models.UserCart;
 import com.example.senamit.stationaryhutpro.viewModels.OrderedProductViewModel;
 import com.example.senamit.stationaryhutpro.viewModels.ProductCartViewModel;
@@ -19,8 +20,11 @@ import com.example.senamit.stationaryhutpro.viewModels.UsersAllOrdersViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -59,6 +63,8 @@ public class NewOrders extends Fragment implements OrderedProductDescInterface {
 
     private DatabaseReference mDatabase;
     String userId;
+
+    private int totalProductQuanityt;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -113,9 +119,9 @@ public class NewOrders extends Fragment implements OrderedProductDescInterface {
         Map<String, Object> addressValue = address.toMap();
         for (int i=0; i<count; i++){
             final int total = i+1;
-            UserCart userCart = orderedProduct.get(i);
+            final UserCart userCart = orderedProduct.get(i);
             userCart.setOrderStatus("CONFIRMED");
-            String productNumber = userCart.getProductNumber();
+            final String productNumber = userCart.getProductNumber();
             String orderNumber = orderNumberPartOne + productNumber.substring(1,4)+total;
             userCart.setOrderNumber(orderNumber);
             userCart.setPaymentMode("Cash on delivery");
@@ -140,12 +146,32 @@ public class NewOrders extends Fragment implements OrderedProductDescInterface {
                     mDatabase.updateChildren(childUpdateAddress).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(Task<Void> task) {
-                            Log.i(TAG, "inside the onComplete method of updatechildren "+keyOrder);
+//                            Log.i(TAG, "inside the onComplete method of updatechildren "+keyOrder);
 
+                            // update product quantity after user has done the shopping
+
+                           mDatabase.child("products").child(productNumber).child("productQuantity")
+                                  .addListenerForSingleValueEvent(new ValueEventListener() {
+                                      @Override
+                                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                              totalProductQuanityt= dataSnapshot.getValue(Integer.class);
+                                              int quantity = userCart.getQuantity();
+                                              int remainingQuantity = totalProductQuanityt-quantity;
+                                          mDatabase.child("products").child(productNumber).child("productQuantity")
+                                                  .setValue(remainingQuantity);
+                                          Log.i(TAG, "the remaining quantity is "+remainingQuantity);
+                                      }
+
+                                      @Override
+                                      public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                      }
+                                  });
                             keyList.add(keyOrder);
-                            Log.i(TAG, "the size of keyList is "+keyList.size());
-                            Log.i(TAG, "count is "+count);
-                            Log.i(TAG, "total is "+total);
+//                            Log.i(TAG, "the size of keyList is "+keyList.size());
+//                            Log.i(TAG, "count is "+count);
+//                            Log.i(TAG, "total is "+total);
                             if (total==count){
                                 Log.i(TAG, "the size of final keyList is "+keyList.size());
                                 productDetails(productNumberList);
