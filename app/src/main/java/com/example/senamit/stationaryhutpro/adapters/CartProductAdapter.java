@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.senamit.stationaryhutpro.R;
 import com.example.senamit.stationaryhutpro.models.Product;
@@ -134,13 +135,24 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
                   int quantity = Integer.parseInt(txtProductQA.getText().toString());
                   int price = Integer.parseInt(txtProductPrice.getText().toString());
                   int minimumOrder = cartProductList.get(position).getMinimumOrder();
-                  if (quantity>minimumOrder){
-                      btnClickinterface.funAddProductQuantity(productNumber, quantity,minimumOrder, price);
+                  int availableQuantity = cartProductList.get(position).getAvailableQuantity();
+
+                  if (quantity<=availableQuantity){
+                      Log.i(TAG, "the available quantity of product is "+availableQuantity);
+                      if (quantity>minimumOrder){
+                          btnClickinterface.funAddProductQuantity(productNumber, quantity,minimumOrder, price);
+                      }else {
+                          txtProductQA.setText(Integer.toString(minimumOrder));
+                          btnClickinterface.funAddProductQuantity(productNumber, quantity,minimumOrder, price);
+                          Log.i(TAG, "quantity is less than the minimumorder");
+                      }
                   }else {
+                      Log.i(TAG, "the available quantity of product is "+availableQuantity);
                       txtProductQA.setText(Integer.toString(minimumOrder));
-                      btnClickinterface.funAddProductQuantity(productNumber, quantity,minimumOrder, price);
-                      Log.i(TAG, "quantity is less than the minimumorder");
+                      btnClickinterface.funAvailableQuantity(false);
+                      Log.i(TAG, "sorry, we dont have such a huge number of products available");
                   }
+
 
                 default:
                     Log.i(TAG, "select any other option");
@@ -152,6 +164,7 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
     public interface ButtonClickInterface{
         void funRemoveBtnClick(String productNumber, int position);
         void funAddProductQuantity(String productNumber, int quantity,int minimumOrder, int price);
+        void funAvailableQuantity(Boolean check);
     }
 
 }

@@ -15,6 +15,7 @@ public class Product {
     String imageUrl;
     String category;
     int minimumOrder;
+    int productQuantity;
 
     public Product(String productName, String productNumber, int productPrice, String imageUrl) {
         this.productName = productName;
@@ -40,6 +41,14 @@ public class Product {
         this.productPrice = productPrice;
         this.imageUrl = imageUrl;
         this.category = category;
+    }
+
+    //for getting price and available quantity from productcartviewmodel
+
+
+    public Product(int productPrice, int availableQuantity) {
+        this.productPrice = productPrice;
+        this.productQuantity = availableQuantity;
     }
 
     public Product() {
@@ -87,6 +96,14 @@ public class Product {
 
     public int getMinimumOrder() {
         return minimumOrder;
+    }
+
+    public int getProductQuantity() {
+        return productQuantity;
+    }
+
+    public void setProductQuantity(int productQuantity) {
+        this.productQuantity = productQuantity;
     }
 
     public void setMinimumOrder(int minimumOrder) {

@@ -85,6 +85,9 @@ public class ProductCartViewModel extends AndroidViewModel {
 
                             Product product = dataSnapshot.getValue(Product.class);
                             listProduct.get(id).setProductPrice(product.getProductPrice());
+                            //for product available quantity:
+                            listProduct.get(id).setAvailableQuantity(product.getProductQuantity());
+
                         }
                         cartLiveData.setValue(listProduct);
                     }

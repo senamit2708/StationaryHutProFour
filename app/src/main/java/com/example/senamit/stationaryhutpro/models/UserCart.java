@@ -21,6 +21,7 @@ public class UserCart {
     private String orderNumber;
     private String paymentMode;
     private int minimumOrder;
+    private int availableQuantity;
 
     public UserCart(String productNumber) {
         this.productNumber = productNumber;
@@ -51,7 +52,8 @@ public class UserCart {
     }
 
     //inside productcartviewmodel used
-    public UserCart(String productNumber, String date, int productPrice, String productName, String imageUrl, int quantity, int minimumOrder ) {
+    public UserCart(String productNumber, String date, int productPrice, String productName,
+                    String imageUrl, int quantity, int minimumOrder, int availableQuantity ) {
         this.productNumber = productNumber;
         this.date = date;
         this.productPrice = productPrice;
@@ -59,6 +61,7 @@ public class UserCart {
         this.imageUrl = imageUrl;
         this.quantity = quantity;
         this.minimumOrder= minimumOrder;
+        this.availableQuantity=availableQuantity;
     }
 
     public UserCart(String productNumber, String date, int productPrice, String productName, String imageUrl, int quantity, String orderStatus, String cartProductKey, String paymentMode) {
@@ -173,6 +176,14 @@ public class UserCart {
         this.minimumOrder = minimumOrder;
     }
 
+    public int getAvailableQuantity() {
+        return availableQuantity;
+    }
+
+    public void setAvailableQuantity(int availableQuantity) {
+        this.availableQuantity = availableQuantity;
+    }
+
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
@@ -183,6 +194,7 @@ public class UserCart {
         result.put("orderDate",date);
         result.put("quantity",quantity);
         result.put("minimumOrder",minimumOrder);
+        result.put("productQuantity",availableQuantity);
         return result;
     }
 

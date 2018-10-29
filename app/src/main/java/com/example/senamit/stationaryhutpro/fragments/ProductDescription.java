@@ -186,6 +186,7 @@ public class ProductDescription extends Fragment implements View.OnClickListener
                     UserCart cart = new UserCart(mProductNumber, date, mProductPrice, mProductName, mImageUrl, mMinimumOrder);
                     cart.setQuantity(mMinimumOrder);
                     cart.setMinimumOrder(mMinimumOrder);
+                    cart.setAvailableQuantity(50);
                     Map<String, Object> cartValue = cart.toMap();
                     Map<String, Object> childUpdate = new HashMap<>();
                     Log.i(TAG, "username is "+mFirebaseUser.getUid());

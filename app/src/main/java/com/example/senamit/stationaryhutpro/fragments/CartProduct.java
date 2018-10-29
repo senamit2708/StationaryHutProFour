@@ -200,6 +200,12 @@ public class CartProduct extends Fragment implements CartProductAdapter.ButtonCl
 
     }
 
+    @Override
+    public void funAvailableQuantity(Boolean check) {
+        Toast.makeText(context, "Sorry, available product is less than your requirement", Toast.LENGTH_SHORT).show();
+        showSoftwareKeyboard(false);
+    }
+
 
     @Override
     public void onDetach() {
