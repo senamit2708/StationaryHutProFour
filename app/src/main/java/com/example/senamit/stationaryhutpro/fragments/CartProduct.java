@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.senamit.stationaryhutpro.R;
 import com.example.senamit.stationaryhutpro.adapters.CartProductAdapter;
@@ -187,9 +188,14 @@ public class CartProduct extends Fragment implements CartProductAdapter.ButtonCl
     }
 
     @Override
-    public void funAddProductQuantity(String productNumber, int quantity, int price) {
+    public void funAddProductQuantity(String productNumber, int quantity,int minimumOrder, int price) {
         Log.i(TAG, "inside funaddproductqunaity "+ productNumber +"quantity"+quantity);
-        mViewModel.addProductQuantityToCart(productNumber, quantity, price);
+        if (quantity>minimumOrder){
+            mViewModel.addProductQuantityToCart(productNumber, quantity, price);
+        }else {
+            Toast.makeText(context, "Sorry, Minimum quantity is"+minimumOrder, Toast.LENGTH_SHORT).show();
+        }
+
         showSoftwareKeyboard(false);
 
     }

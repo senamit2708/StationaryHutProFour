@@ -14,12 +14,23 @@ public class Product {
     int productPrice;
     String imageUrl;
     String category;
+    int minimumOrder;
 
     public Product(String productName, String productNumber, int productPrice, String imageUrl) {
         this.productName = productName;
         this.productNumber = productNumber;
         this.productPrice = productPrice;
         this.imageUrl = imageUrl;
+
+    }
+
+    //in product description i m using this..
+    public Product(String productName, String productNumber, int productPrice, String imageUrl, int minimumOrder) {
+        this.productName = productName;
+        this.productNumber = productNumber;
+        this.productPrice = productPrice;
+        this.imageUrl = imageUrl;
+        this.minimumOrder = minimumOrder;
 
     }
 
@@ -72,6 +83,14 @@ public class Product {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public int getMinimumOrder() {
+        return minimumOrder;
+    }
+
+    public void setMinimumOrder(int minimumOrder) {
+        this.minimumOrder = minimumOrder;
     }
 
     @Exclude

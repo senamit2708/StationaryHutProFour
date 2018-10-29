@@ -101,7 +101,7 @@
     <fragment
         android:id="@+id/orderedProductDescription"
         android:name="com.example.senamit.stationaryhutpro.fragments.OrderedProductDescription"
-        android:label="activity_ordered_product_description"
+        android:label="Order Description"
         tools:layout="@layout/activity_ordered_product_description" />
     <fragment
         android:id="@+id/userAccount"
@@ -121,8 +121,8 @@
     <fragment
         android:id="@+id/userAccountAddress"
         android:name="com.example.senamit.stationaryhutpro.fragments.UserAccountAddress"
-        android:label="activity_user_account_address"
-        tools:layout="@layout/activity_user_account_address" >
+        android:label="Address"
+        tools:layout="@layout/activity_user_account_address">
         <action
             android:id="@+id/action_userAccountAddress_to_userAddressEntry"
             app:destination="@id/userAddressEntry" />
@@ -156,8 +156,8 @@
     <fragment
         android:id="@+id/productFilter"
         android:name="com.example.senamit.stationaryhutpro.fragments.ProductFilter"
-        android:label="activity_product_filter"
-        tools:layout="@layout/activity_product_filter" >
+        android:label="Filter"
+        tools:layout="@layout/activity_product_filter">
         <action
             android:id="@+id/action_productFilter_to_categoryProductView"
             app:destination="@id/categoryProductView" />

@@ -54,6 +54,7 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
             holder.txtProductPrice.setText(Integer.toString(cartProductList.get(position).getProductPrice()));
             holder.txtProductName.setText(cartProductList.get(position).getProductName());
             holder.txtProductQA.setText(Integer.toString(cartProductList.get(position).getQuantity()));
+            holder.txtMinimumQty.setText(Integer.toString(cartProductList.get(position).getMinimumOrder()));
             Picasso.with(context).load(cartProductList.get(position).getImageUrl()).into(holder.imageProduct);
             int quantity = cartProductList.get(position).getQuantity();
             int price = cartProductList.get(position).getProductPrice();
@@ -93,6 +94,7 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
         TextView txtProductPrice;
         TextView txtTotalPrice;
         TextView txtTotalQuantity;
+        TextView txtMinimumQty;
         EditText txtProductQA;
         Button btnRemove;
         Button btnSaveForLater;
@@ -106,6 +108,7 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
             txtProductQA = itemView.findViewById(R.id.txtProductQA);
             txtTotalPrice = itemView.findViewById(R.id.txtTotalPrice);
             txtTotalQuantity = itemView.findViewById(R.id.txtTotalQuantity);
+            txtMinimumQty = itemView.findViewById(R.id.txtMinimumOrder);
             btnRemove = itemView.findViewById(R.id.btnRemove);
             btnSaveForLater = itemView.findViewById(R.id.btnSaveForLater);
             btnAddQuantity = itemView.findViewById(R.id.btnQuantity);
@@ -130,7 +133,15 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
                     productNumber = cartProductList.get(position).getProductNumber();
                   int quantity = Integer.parseInt(txtProductQA.getText().toString());
                   int price = Integer.parseInt(txtProductPrice.getText().toString());
-                  btnClickinterface.funAddProductQuantity(productNumber, quantity, price);
+                  int minimumOrder = cartProductList.get(position).getMinimumOrder();
+                  if (quantity>minimumOrder){
+                      btnClickinterface.funAddProductQuantity(productNumber, quantity,minimumOrder, price);
+                  }else {
+                      txtProductQA.setText(Integer.toString(minimumOrder));
+                      btnClickinterface.funAddProductQuantity(productNumber, quantity,minimumOrder, price);
+                      Log.i(TAG, "quantity is less than the minimumorder");
+                  }
+
                 default:
                     Log.i(TAG, "select any other option");
             }
@@ -140,7 +151,7 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
 
     public interface ButtonClickInterface{
         void funRemoveBtnClick(String productNumber, int position);
-        void funAddProductQuantity(String productNumber, int quantity, int price);
+        void funAddProductQuantity(String productNumber, int quantity,int minimumOrder, int price);
     }
 
 }

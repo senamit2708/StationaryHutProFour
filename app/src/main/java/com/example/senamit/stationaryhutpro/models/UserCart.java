@@ -20,6 +20,7 @@ public class UserCart {
     private String totalPrice;
     private String orderNumber;
     private String paymentMode;
+    private int minimumOrder;
 
     public UserCart(String productNumber) {
         this.productNumber = productNumber;
@@ -30,21 +31,34 @@ public class UserCart {
         this.productPrice = productPrice;
     }
 
+    //this constructor called from product description to load cart product
     public UserCart(String productNumber, String date, int productPrice, String productName, String imageUrl) {
         this.productNumber = productNumber;
         this.date = date;
         this.productPrice = productPrice;
         this.productName = productName;
         this.imageUrl = imageUrl;
+//        this.minimumOrder = minimumOrder;
     }
 
-    public UserCart(String productNumber, String date, int productPrice, String productName, String imageUrl, int quantity) {
+    public UserCart(String productNumber, String date, int productPrice, String productName, String imageUrl, int quantity ) {
         this.productNumber = productNumber;
         this.date = date;
         this.productPrice = productPrice;
         this.productName = productName;
         this.imageUrl = imageUrl;
         this.quantity = quantity;
+    }
+
+    //inside productcartviewmodel used
+    public UserCart(String productNumber, String date, int productPrice, String productName, String imageUrl, int quantity, int minimumOrder ) {
+        this.productNumber = productNumber;
+        this.date = date;
+        this.productPrice = productPrice;
+        this.productName = productName;
+        this.imageUrl = imageUrl;
+        this.quantity = quantity;
+        this.minimumOrder= minimumOrder;
     }
 
     public UserCart(String productNumber, String date, int productPrice, String productName, String imageUrl, int quantity, String orderStatus, String cartProductKey, String paymentMode) {
@@ -151,6 +165,14 @@ public class UserCart {
         this.paymentMode = paymentMode;
     }
 
+    public int getMinimumOrder() {
+        return minimumOrder;
+    }
+
+    public void setMinimumOrder(int minimumOrder) {
+        this.minimumOrder = minimumOrder;
+    }
+
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
@@ -160,6 +182,7 @@ public class UserCart {
         result.put("imageUrl",imageUrl);
         result.put("orderDate",date);
         result.put("quantity",quantity);
+        result.put("minimumOrder",minimumOrder);
         return result;
     }
 

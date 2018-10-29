@@ -64,6 +64,7 @@ public class ProductDescription extends Fragment implements View.OnClickListener
     private Product product;
     private String userId;
     private String date;
+    private int mMinimumOrder;
 
     private TextView mTxtProductName;
     private TextView mTxtProductPrice;
@@ -137,6 +138,7 @@ public class ProductDescription extends Fragment implements View.OnClickListener
                     mProductName = product.getProductName();
                     mProductPrice = product.getProductPrice();
                     mImageUrl = product.getImageUrl();
+                    mMinimumOrder = product.getMinimumOrder();
                     mTxtProductName.setText(product.getProductName());
                     mTxtProductPrice.setText(Integer.toString(product.getProductPrice()));
                     mTxtProductNumber.setText(product.getProductNumber());
@@ -181,8 +183,9 @@ public class ProductDescription extends Fragment implements View.OnClickListener
                 }
                 else {
                     Log.i(TAG, "product is not avaiable, trying to load the product");
-                    UserCart cart = new UserCart(mProductNumber, date, mProductPrice, mProductName, mImageUrl);
-                    cart.setQuantity(1);
+                    UserCart cart = new UserCart(mProductNumber, date, mProductPrice, mProductName, mImageUrl, mMinimumOrder);
+                    cart.setQuantity(mMinimumOrder);
+                    cart.setMinimumOrder(mMinimumOrder);
                     Map<String, Object> cartValue = cart.toMap();
                     Map<String, Object> childUpdate = new HashMap<>();
                     Log.i(TAG, "username is "+mFirebaseUser.getUid());
