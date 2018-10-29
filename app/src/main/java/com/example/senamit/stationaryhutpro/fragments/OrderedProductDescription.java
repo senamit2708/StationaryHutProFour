@@ -22,15 +22,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 
 public class OrderedProductDescription extends Fragment {
 
     private static final String TAG = OrderedProductViewModel.class.getSimpleName();
+    private static final String PRODUCT_KEY = "product_key";
 
     private Context context;
     private UsersAllOrdersViewModel mViewModel;
     private UserCart cartProduct;
     private String userId;
+    private String productNumber;
 
     private TextView txtProductName;
     private TextView txtProductNumber;
@@ -94,6 +97,15 @@ public class OrderedProductDescription extends Fragment {
         }
     });
 
+    imageProduct.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Bundle bundle = new Bundle();
+            bundle.putString(PRODUCT_KEY, productNumber);
+            Navigation.findNavController(view).navigate(R.id.action_orderedProductDescription_to_productDescription,bundle);
+        }
+    });
+
     }
 
     private void setAddress(Address address) {
@@ -128,6 +140,8 @@ public class OrderedProductDescription extends Fragment {
         Log.i(TAG,"the total price is "+totalPrice);
         txtTotalQuantity.setText("Total price of ("+quantity+" items)");
         txtTotalPrice.setText(Integer.toString(totalPrice));
+
+        productNumber= userCart.getProductNumber();
     }
 
 

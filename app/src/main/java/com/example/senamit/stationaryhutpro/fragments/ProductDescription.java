@@ -54,14 +54,14 @@ public class ProductDescription extends Fragment implements View.OnClickListener
 
     private static final String TAG = ProductDescription.class.getSimpleName();
     private static final String PRODUCT_KEY = "product_key";
-    private static final String PRODUCT_INDEX = "product_index";
+//    private static final String PRODUCT_INDEX = "product_index";
 
     private Context context;
     private String mProductNumber;
     private String mProductName;
     private int mProductPrice;
     private String mImageUrl;
-    private int clickedItemIndex;
+//    private int clickedItemIndex;
     private Product product;
     private String userId;
     private String date;
@@ -89,10 +89,8 @@ public class ProductDescription extends Fragment implements View.OnClickListener
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mProductNumber = getArguments().getString(PRODUCT_KEY);
-        clickedItemIndex = getArguments().getInt(PRODUCT_INDEX);
+//        clickedItemIndex = getArguments().getInt(PRODUCT_INDEX);
         Log.i(TAG, "inside oncreate product description "+mProductNumber);
-        Log.i(TAG, "inside oncreate product description "+clickedItemIndex);
-
         mCartViewModel = ViewModelProviders.of(getActivity()).get(ProductCartViewModel.class);
 
 

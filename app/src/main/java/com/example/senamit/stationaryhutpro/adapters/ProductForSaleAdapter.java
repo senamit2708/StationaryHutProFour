@@ -99,7 +99,7 @@ public class ProductForSaleAdapter extends RecyclerView.Adapter<ProductForSaleAd
             productId= product.get(clickedItemIndex).getProductNumber();
             bundle = new Bundle();
             bundle.putString(PRODUCT_KEY, productId);
-            bundle.putInt(PRODUCT_INDEX, clickedItemIndex);
+//            bundle.putInt(PRODUCT_INDEX, clickedItemIndex);
             Log.i(TAG, "inside createonclicklistener recycler adapter, productId is"+productId);
             Navigation.findNavController(view).navigate(R.id.action_productForSaleView_to_productDescription, bundle);
         }

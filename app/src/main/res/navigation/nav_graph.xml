@@ -102,7 +102,11 @@
         android:id="@+id/orderedProductDescription"
         android:name="com.example.senamit.stationaryhutpro.fragments.OrderedProductDescription"
         android:label="Order Description"
-        tools:layout="@layout/activity_ordered_product_description" />
+        tools:layout="@layout/activity_ordered_product_description" >
+        <action
+            android:id="@+id/action_orderedProductDescription_to_productDescription"
+            app:destination="@id/productDescription" />
+    </fragment>
     <fragment
         android:id="@+id/userAccount"
         android:name="com.example.senamit.stationaryhutpro.fragments.UserAccount"
