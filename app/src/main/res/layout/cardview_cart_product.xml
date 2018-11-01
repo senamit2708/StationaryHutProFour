@@ -9,13 +9,15 @@
     >
 
     <com.google.android.material.card.MaterialCardView
+        style="@style/Widget.MaterialComponents.CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.CardView"
-        app:cardElevation="8dp"
+        android:id="@+id/cardviewupdate"
         app:cardBackgroundColor="@color/colorCardView"
+        app:cardElevation="8dp"
         app:cardUseCompatPadding="true"
-        >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -192,6 +194,20 @@
                 android:text="pcs"
                 app:layout_constraintBaseline_toBaselineOf="@+id/txtMinimumOrder"
                 app:layout_constraintStart_toEndOf="@+id/txtMinimumOrder" />
+
+            <TextView
+                android:id="@+id/txtOutOfStock"
+                android:layout_width="4dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:textColor="@color/red"
+                app:layout_constraintBaseline_toBaselineOf="@+id/btnRemove"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.502"
+                app:layout_constraintStart_toEndOf="@+id/btnRemove" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

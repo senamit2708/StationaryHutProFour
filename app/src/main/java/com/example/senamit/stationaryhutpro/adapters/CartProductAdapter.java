@@ -19,6 +19,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.ViewHolder> {
@@ -29,6 +30,7 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
     private List<UserCart> cartProductList;
     private List<Product> productList;
     private ButtonClickInterface btnClickinterface;
+    private String productNumberCheck;
 
     public CartProductAdapter(Context context) {
         this.context = context;
@@ -50,7 +52,7 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (cartProductList!= null){
-            Log.i(TAG, "inside onBindViewHolder "+cartProductList.get(position).getProductNumber());
+//            Log.i(TAG, "inside onBindViewHolder "+cartProductList.get(position).getProductNumber());
             holder.txtProductNumber.setText(cartProductList.get(position).getProductNumber());
             holder.txtProductPrice.setText(Integer.toString(cartProductList.get(position).getProductPrice()));
             holder.txtProductName.setText(cartProductList.get(position).getProductName());
@@ -60,14 +62,13 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
             int quantity = cartProductList.get(position).getQuantity();
             int price = cartProductList.get(position).getProductPrice();
             int totalPrice = (quantity * price);
-            Log.i(TAG,"the total price is "+totalPrice);
+//            Log.i(TAG,"the total price is "+totalPrice);
             holder.txtTotalQuantity.setText("Total price of ("+quantity+" items)");
             holder.txtTotalPrice.setText(Integer.toString(totalPrice));
-
         }
 
         else {
-            Log.i(TAG, "the cartProductList is null");
+//            Log.i(TAG, "the cartProductList is null");
             holder.txtProductNumber.setText("No Product found");
             holder.txtProductPrice.setText("price not loaded");
         }
@@ -85,7 +86,7 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
     public void setCartProduct(List<UserCart> cartProductList){
         this.cartProductList = cartProductList;
         notifyDataSetChanged();
-        Log.i(TAG, "inside setCartProduct method");
+//        Log.i(TAG, "inside setCartProduct method");
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -96,7 +97,9 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
         TextView txtTotalPrice;
         TextView txtTotalQuantity;
         TextView txtMinimumQty;
+        TextView txtOutOfStock;
         EditText txtProductQA;
+        CardView cardView;
         Button btnRemove;
         Button btnSaveForLater;
         Button btnAddQuantity;
@@ -110,9 +113,11 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
             txtTotalPrice = itemView.findViewById(R.id.txtTotalPrice);
             txtTotalQuantity = itemView.findViewById(R.id.txtTotalQuantity);
             txtMinimumQty = itemView.findViewById(R.id.txtMinimumOrder);
+            txtOutOfStock = itemView.findViewById(R.id.txtOutOfStock);
             btnRemove = itemView.findViewById(R.id.btnRemove);
             btnSaveForLater = itemView.findViewById(R.id.btnSaveForLater);
             btnAddQuantity = itemView.findViewById(R.id.btnQuantity);
+            cardView = itemView.findViewById(R.id.cardviewupdate);
             btnRemove.setOnClickListener(this);
             btnAddQuantity.setOnClickListener(this);
         }
@@ -123,13 +128,13 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
             String productNumber;
             switch (view.getId()){
                 case R.id.btnRemove:
-                    Log.i(TAG, "inside button click ");
+//                    Log.i(TAG, "inside button click ");
                      position = getAdapterPosition();
                      productNumber = cartProductList.get(position).getProductNumber();
                     btnClickinterface.funRemoveBtnClick(productNumber, position);
                     break;
                 case R.id.btnQuantity:
-                    Log.i(TAG, "inside the quantity button block");
+//                    Log.i(TAG, "inside the quantity button block");
                     position = getAdapterPosition();
                     productNumber = cartProductList.get(position).getProductNumber();
                   int quantity = Integer.parseInt(txtProductQA.getText().toString());
@@ -137,25 +142,27 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
                   int minimumOrder = cartProductList.get(position).getMinimumOrder();
                   int availableQuantity = cartProductList.get(position).getAvailableQuantity();
 
+
+
                   if (quantity<=availableQuantity){
-                      Log.i(TAG, "the available quantity of product is "+availableQuantity);
+//                      Log.i(TAG, "the available quantity of product is "+availableQuantity);
                       if (quantity>minimumOrder){
                           btnClickinterface.funAddProductQuantity(productNumber, quantity,minimumOrder, price);
                       }else {
                           txtProductQA.setText(Integer.toString(minimumOrder));
                           btnClickinterface.funAddProductQuantity(productNumber, quantity,minimumOrder, price);
-                          Log.i(TAG, "quantity is less than the minimumorder");
+//                          Log.i(TAG, "quantity is less than the minimumorder");
                       }
                   }else {
-                      Log.i(TAG, "the available quantity of product is "+availableQuantity);
+//                      Log.i(TAG, "the available quantity of product is "+availableQuantity);
                       txtProductQA.setText(Integer.toString(minimumOrder));
                       btnClickinterface.funAvailableQuantity(false);
-                      Log.i(TAG, "sorry, we dont have such a huge number of products available");
+//                      Log.i(TAG, "sorry, we dont have such a huge number of products available");
                   }
 
 
                 default:
-                    Log.i(TAG, "select any other option");
+//                    Log.i(TAG, "select any other option");
             }
         }
     }

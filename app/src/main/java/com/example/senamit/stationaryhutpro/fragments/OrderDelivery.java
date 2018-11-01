@@ -123,12 +123,13 @@ public class OrderDelivery extends Fragment {
                         txtTotalPrice.setText(String.valueOf(total));
                         txtFinalPrice.setText(String.valueOf(total));
                         txtShippingHint.setText("Total price above "+getString(R.string.Rs)+""+minTotalPrice+" is of free delivery");
-                        txtShippingHint.setVisibility(View.VISIBLE);
+//                        txtShippingHint.setVisibility(View.VISIBLE);
                     }else {
                         txtTotalPrice.setText(String.valueOf(totalPrice));
                         txtFinalPrice.setText(String.valueOf(totalPrice));
                         txtDeliveryPrice.setText("Free");
-                        txtShippingHint.setVisibility(View.INVISIBLE);
+                        txtShippingHint.setText("Yay! Free Deliver on this order");
+//                        txtShippingHint.setVisibility(View.INVISIBLE);
                     }
                 }
             }

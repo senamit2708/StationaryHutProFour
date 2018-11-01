@@ -6,76 +6,79 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <com.google.android.material.card.MaterialCardView
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        app:cardElevation="2dp"
 
-        app:cardUseCompatPadding="true"
+    <com.google.android.material.card.MaterialCardView
         style="@style/Widget.MaterialComponents.CardView"
-        app:cardBackgroundColor="@color/colorCardView">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:cardBackgroundColor="@color/colorCardView"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="300dp">
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
 
-            <ImageView
-                android:id="@+id/imageProduct"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+        android:id="@+id/imageProduct"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/txtProductName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:hint="product_name"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageProduct" />
+        <TextView
+        android:id="@+id/txtProductName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:hint="product_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageProduct" />
 
-            <TextView
-                android:id="@+id/txtProductNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:hint="product_number"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtProductName" />
+        <TextView
+        android:id="@+id/txtProductNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:hint="product_number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtProductName" />
 
-            <TextView
-                android:id="@+id/txtProductPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:layout_marginLeft="2dp"
-                android:hint="price"
-                app:layout_constraintBaseline_toBaselineOf="@+id/textView18"
-                app:layout_constraintStart_toEndOf="@+id/textView18" />
+        <TextView
+        android:id="@+id/txtProductPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:hint="price"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView18"
+        app:layout_constraintStart_toEndOf="@+id/textView18" />
 
-            <TextView
-                android:id="@+id/textView18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/Rs"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtProductNumber" />
-            <!--<ImageButton-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:id="@+id/btnFavorite"-->
-                <!--android:src="@drawable/ic_favorite_black"/>-->
+        <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/Rs"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtProductNumber" />
+        <!--<ImageButton-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/btnFavorite"-->
+        <!--android:src="@drawable/ic_favorite_black"/>-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

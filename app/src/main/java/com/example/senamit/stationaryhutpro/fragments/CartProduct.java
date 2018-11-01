@@ -132,6 +132,7 @@ public class CartProduct extends Fragment implements CartProductAdapter.ButtonCl
                             int productPrice = userCartProduct.get(i).getProductPrice();
                             int price = quantity * productPrice;
                             totalPrice= totalPrice+price;
+
                         }
                         txtTotalItemCount.setText("Price("+size+" items)");
                         txtItemFinalPrice.setText(String.valueOf(totalPrice));
@@ -141,7 +142,7 @@ public class CartProduct extends Fragment implements CartProductAdapter.ButtonCl
                             txtTotalPrice.setText(String.valueOf(total));
                             txtFinalPrice.setText(String.valueOf(total));
                             txtShippingHint.setText("Total price above "+getString(R.string.Rs)+""+minTotalPrice+" is of free delivery");
-                            txtShippingHint.setVisibility(View.VISIBLE);
+//                            txtShippingHint.setVisibility(View.VISIBLE);
                         }else {
                             txtTotalPrice.setText(String.valueOf(totalPrice));
                             txtFinalPrice.setText(String.valueOf(totalPrice));

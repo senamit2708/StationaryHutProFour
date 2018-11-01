@@ -1,6 +1,7 @@
 package com.example.senamit.stationaryhutpro.fragments;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.senamit.stationaryhutpro.R;
@@ -27,6 +29,8 @@ public class PaymentSelection extends Fragment {
     private RadioButton btnNetBanking;
     private RadioButton btnPhonePe;
     private Button btnContinue;
+    private TextView txtStringOtp;
+    private TextView txtPaymentGateway;
 
     @Nullable
     @Override
@@ -39,11 +43,24 @@ public class PaymentSelection extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        txtStringOtp = view.findViewById(R.id.txtStringOtp);
+        txtPaymentGateway=view.findViewById(R.id.txtPaymentGateway);
         btnRadioPayment= view.findViewById(R.id.btnRadioPayment);
         btnContinue= view.findViewById(R.id.btnContinue);
         btnCOD= view.findViewById(R.id.btnCOD);
         btnNetBanking= view.findViewById(R.id.btnNetBanking);
         btnPhonePe = view.findViewById(R.id.btnPhonePe);
+
+        txtStringOtp.setText(R.string.textOtp);
+        Typeface customFont = Typeface.createFromAsset(context.getAssets(), "fonts/Rubik-MediumItalic.ttf");
+//        Typeface customBoldFont = Typeface.createFromAsset(context.getAssets(), "fonts/Rubik-Bold.ttf");
+
+        txtStringOtp.setTypeface(customFont);
+//        txtPaymentGateway.setTypeface(customBoldFont);
+
+
+
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -51,7 +51,9 @@ public class UserCart {
         this.quantity = quantity;
     }
 
-    //inside productcartviewmodel used
+
+
+    //for setting the boolean..for out of stock in cartproduct class
     public UserCart(String productNumber, String date, int productPrice, String productName,
                     String imageUrl, int quantity, int minimumOrder, int availableQuantity ) {
         this.productNumber = productNumber;
@@ -194,7 +196,7 @@ public class UserCart {
         result.put("orderDate",date);
         result.put("quantity",quantity);
         result.put("minimumOrder",minimumOrder);
-        result.put("productQuantity",availableQuantity);
+        result.put("availableQuantity",availableQuantity);
         return result;
     }
 

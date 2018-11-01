@@ -5,4 +5,5 @@
     <string name="cartEmpty">My cart is empty !</string>
     <string name="outOfStock">OUT OF STOCK</string>
     <string name="inStock">IN STOCK</string>
+    <string name="textOtp">Pay using PhonePe/Net Banking is not active now</string>
 </resources>
