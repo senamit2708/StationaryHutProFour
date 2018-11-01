@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.senamit.stationaryhutpro.R;
@@ -24,6 +25,7 @@ import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -61,6 +63,7 @@ public class UserProfile extends Fragment {
         txtLastName = view.findViewById(R.id.txtLastName);
         txtEmailId = view.findViewById(R.id.txtEmail);
         btnUpdate = view.findViewById(R.id.btnUpdate);
+
 
         mFirebaseUser=FirebaseAuth.getInstance().getCurrentUser().getUid();
 
