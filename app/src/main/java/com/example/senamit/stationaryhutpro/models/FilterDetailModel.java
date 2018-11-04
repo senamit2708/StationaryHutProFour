@@ -37,7 +37,16 @@ public class FilterDetailModel {
         this.status = false;
     }
 
-    public FilterDetailModel(String item, String type,int index, Boolean status) {
+    //for filter in categoryproductview to get the new array having list of filter items
+
+
+    public FilterDetailModel( String categoryName,String type, String item) {
+        this.item = item;
+        this.type = type;
+        this.categoryName = categoryName;
+    }
+
+    public FilterDetailModel(String item, String type, int index, Boolean status) {
         this.index = index;
         this.item = item;
         this.type = type;

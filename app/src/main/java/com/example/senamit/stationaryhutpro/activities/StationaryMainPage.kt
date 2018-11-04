@@ -24,7 +24,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class StationaryMainPage : AppCompatActivity() {
 
-    private val TAG = SignInActivity::class.java.simpleName
+    private val TAG = StationaryMainPage::class.java.simpleName
 
     private var mViewModel: ProductCartViewModel? = null
     private var count = 0

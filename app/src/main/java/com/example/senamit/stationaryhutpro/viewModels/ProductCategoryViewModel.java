@@ -28,6 +28,7 @@ import androidx.lifecycle.Observer;
 public class ProductCategoryViewModel extends AndroidViewModel {
 
     private static final String TAG = ProductCategoryViewModel.class.getSimpleName();
+    private int FILTER_CHECK= 44;
 
     private String productCategoryNameNew;
     private String productCategoryNameOld;
@@ -56,16 +57,18 @@ public class ProductCategoryViewModel extends AndroidViewModel {
         super(application);
     }
 
+    //called for getting the list of products of that category
     public LiveData<List<Product>> getCategoryProduct(String productCategory) {
 //        productCategoryName = productCategory;
        loadProductLiveData(productCategory);
         return productLiveData;
     }
 
+    //getting the complete list of product in the category selected(getCategoryProduct)
     private void loadProductLiveData(String productCategory) {
         PRODUCT_FOR_SALE = FirebaseDatabase
                 .getInstance().getReference("/products").orderByChild("category").equalTo(productCategory);
-        Log.i(TAG, "PRODUCT_FOR_SALE "+PRODUCT_FOR_SALE);
+//        Log.i(TAG, "PRODUCT_FOR_SALE "+PRODUCT_FOR_SALE);
         productLiveData = new MediatorLiveData<>();
         liveData = new FirebaseQueryLiveData(PRODUCT_FOR_SALE);
         productLiveData.addSource(liveData, new Observer<DataSnapshot>() {
@@ -76,7 +79,7 @@ public class ProductCategoryViewModel extends AndroidViewModel {
                     for (DataSnapshot productDataSnapshot : dataSnapshot.getChildren()){
                         Product product = productDataSnapshot.getValue(Product.class);
                         productList.add(product);
-                        Log.i(TAG, "inside loadproduct live data"+product);
+//                        Log.i(TAG, "inside loadproduct live data"+product);
 
                     }
                     Collections.reverse(productList);
@@ -141,12 +144,12 @@ public class ProductCategoryViewModel extends AndroidViewModel {
 //                           Log.i(TAG, "the size of array inside the loop is "+filterDetailList.size());
                        }
                     }
-                    Log.i(TAG, "inside mutable live data loading method");
+//                    Log.i(TAG, "inside mutable live data loading method");
                     filterCategoryLiveData.setValue(filterCategoryList);
                     filterItemLiveData.setValue(filterDetailList);
                 }
                 else {
-                    Log.i(TAG, "the datasnapshot is null");
+//                    Log.i(TAG, "the datasnapshot is null");
                 }
             }
         });
@@ -168,9 +171,9 @@ public class ProductCategoryViewModel extends AndroidViewModel {
 
     public void setCompleteFilterCategory(List<FilterDetailModel> filterDetailModels) {
         productCategoryCheck= filterDetailModels.get(0).getCategoryName();
-        Log.i(TAG,"THE SIZE OF ARRAY IN COMPLETECATEGORY IS "+filterDetailModels.size());
+//        Log.i(TAG,"THE SIZE OF ARRAY IN COMPLETECATEGORY IS "+filterDetailModels.size());
         filterItemLiveData.setValue(filterDetailModels);
-        Log.i(TAG,"THE SIZE OF ARRAY IN COMPLETECATEGORY IS "+filterItemLiveData.getValue().size());
+//        Log.i(TAG,"THE SIZE OF ARRAY IN COMPLETECATEGORY IS "+filterItemLiveData.getValue().size());
 
 
     }
@@ -192,6 +195,25 @@ public class ProductCategoryViewModel extends AndroidViewModel {
         }
         productCategoryName= productCategory;
 
+    }
+
+    //for filter in categoryproductview class
+    public LiveData<List<FilterDetailModel>> getFilterDetailsForProductView() {
+
+        if (filterItemLiveData!= null){
+           return filterItemLiveData;
+        }else {
+            return null;
+        }
+
+    }
+
+    public void setFilterCheckStatus(int filter_check) {
+        FILTER_CHECK = filter_check;
+    }
+
+    public int getFilterCheckStatus() {
+        return FILTER_CHECK;
     }
 
 //    public void getSortTypeProduct(int sortType) {

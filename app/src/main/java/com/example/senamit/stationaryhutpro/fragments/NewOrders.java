@@ -45,6 +45,8 @@ import androidx.recyclerview.widget.RecyclerView;
 public class NewOrders extends Fragment implements OrderedProductDescInterface {
 
     private static final String TAG = NewOrders.class.getSimpleName();
+    private final int NEW_ORDER_CHECK=32;
+    private int NEW_ORDER_STATUS;
 
     private Context context;
     private UserAddressViewModel mAddressViewModel;
@@ -69,6 +71,7 @@ public class NewOrders extends Fragment implements OrderedProductDescInterface {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        NEW_ORDER_STATUS = getArguments().getInt("newOrderCheck");
        mAddressViewModel = ViewModelProviders.of(getActivity()).get(UserAddressViewModel.class);
        mProductCardViewModel = ViewModelProviders.of(getActivity()).get(ProductCartViewModel.class);
        mOrderedProductViewModel = ViewModelProviders.of(getActivity()).get(OrderedProductViewModel.class);
@@ -97,7 +100,14 @@ public class NewOrders extends Fragment implements OrderedProductDescInterface {
        orderedProduct = mProductCardViewModel.getOrderedProduct().getValue();
          orderNumberPartOne = new SimpleDateFormat("yyMMddHHmm", Locale.getDefault()).format(new Date());
 
-         writeNewPost(orderedProduct);
+         Log.i(TAG, "NEW_ORDER_STATUS: "+NEW_ORDER_STATUS);
+         Log.i(TAG,"NEW_ORDER_CHECK: "+NEW_ORDER_CHECK);
+         if (NEW_ORDER_STATUS==NEW_ORDER_CHECK){
+             Log.i(TAG, "inside the NEW_ORDER_STATUS==NEW_ORDER_CHECK");
+             writeNewPost(orderedProduct);
+             NEW_ORDER_STATUS++;
+         }
+
 
         mRecyclerView = view.findViewById(R.id.recycler_order);
         mLayoutManager = new LinearLayoutManager(context);
@@ -138,7 +148,7 @@ public class NewOrders extends Fragment implements OrderedProductDescInterface {
             FirebaseDatabase.getInstance().getReference("/users/"+userId+"/order/"+keyOrder).child("orderConfirmation").setValue(1);
             childUpdate.put("/users/"+userId+"/order/"+keyOrder+"/product", productValues);
             childUpdateAddress.put("/users/"+userId+"/order/"+keyOrder+"/address", addressValue);
-            Log.i(TAG, "inside the writeNewPost for loop "+i);
+//            Log.i(TAG, "inside the writeNewPost for loop "+i);
 
             mDatabase.updateChildren(childUpdate).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -160,7 +170,7 @@ public class NewOrders extends Fragment implements OrderedProductDescInterface {
                                               int remainingQuantity = totalProductQuanityt-quantity;
                                           mDatabase.child("products").child(productNumber).child("productQuantity")
                                                   .setValue(remainingQuantity);
-                                          Log.i(TAG, "the remaining quantity is "+remainingQuantity);
+//                                          Log.i(TAG, "the remaining quantity is "+remainingQuantity);
                                       }
 
                                       @Override
@@ -173,7 +183,7 @@ public class NewOrders extends Fragment implements OrderedProductDescInterface {
 //                            Log.i(TAG, "count is "+count);
 //                            Log.i(TAG, "total is "+total);
                             if (total==count){
-                                Log.i(TAG, "the size of final keyList is "+keyList.size());
+//                                Log.i(TAG, "the size of final keyList is "+keyList.size());
                                 productDetails(productNumberList);
                             }
 

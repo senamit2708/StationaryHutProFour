@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class NavDrawerItemAdapter extends RecyclerView.Adapter<NavDrawerItemAdapter.ViewHolder> {
 
     private static final String TAG = NavDrawerItemAdapter.class.getSimpleName();
+    private final int FILTER_CHECK= 44;
     private Context context;
     private List<ProductCategory> productCategories;
     private ProductCategoryInterface mInterface;
@@ -77,7 +78,9 @@ public class NavDrawerItemAdapter extends RecyclerView.Adapter<NavDrawerItemAdap
             Log.i(TAG, "the product category in adapter is "+productCategory);
             Bundle bundle = new Bundle();
             bundle.putString("productCategory", productCategory);
+            bundle.putInt("filterChecked", FILTER_CHECK );
             mInterface.funSetProductCategory(productCategory);
+            mInterface.funSetFilterCheck(FILTER_CHECK);
             Navigation.findNavController(view).navigate(R.id.action_navDrawerStationaryItem_to_categoryProductView, bundle);
         }
     }

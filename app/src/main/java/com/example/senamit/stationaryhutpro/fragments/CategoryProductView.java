@@ -13,6 +13,7 @@ import android.widget.RadioGroup;
 
 import com.example.senamit.stationaryhutpro.R;
 import com.example.senamit.stationaryhutpro.adapters.CategoryProductAdapter;
+import com.example.senamit.stationaryhutpro.models.FilterDetailModel;
 import com.example.senamit.stationaryhutpro.models.Product;
 import com.example.senamit.stationaryhutpro.viewModels.ProductCartViewModel;
 import com.example.senamit.stationaryhutpro.viewModels.ProductCategoryViewModel;
@@ -34,11 +35,15 @@ public class CategoryProductView extends Fragment implements View.OnClickListene
 
     private static final String TAG = CategoryProductView.class.getSimpleName();
     private static final String CATEGORY_KEY = "productCategory";
+    private int FILTER_CHECK= 44;
+
 
     private Context context;
     private String mUserId;
     private String productCategory;
+    private int filterCheck;
     private List<Product> filterProduct;
+    private List<FilterDetailModel> mNewFilterSearch;
 
     private Button btnSort;
     private Button btnFilter;
@@ -55,8 +60,10 @@ public class CategoryProductView extends Fragment implements View.OnClickListene
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(TAG, "inside oncreate method");
         productCategory = getArguments().getString(CATEGORY_KEY);
         Log.i(TAG, "the product category is "+productCategory);
+        filterCheck = getArguments().getInt("filterChecked");
         mCartViewModel = ViewModelProviders.of(getActivity()).get(ProductCartViewModel.class);
         mViewModel = ViewModelProviders.of(getActivity()).get(ProductCategoryViewModel.class);
 
@@ -66,6 +73,7 @@ public class CategoryProductView extends Fragment implements View.OnClickListene
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         context = container.getContext();
+        Log.i(TAG, "inside oncreateview method");
         View view = inflater.inflate(R.layout.activity_category_product_view, container, false);
         setHasOptionsMenu(true);
         return view;
@@ -74,6 +82,7 @@ public class CategoryProductView extends Fragment implements View.OnClickListene
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.i(TAG,"inside onviewcreated method");
         mRecyclerView = view.findViewById(R.id.recycler_product);
         mLayoutManager = new GridLayoutManager(context, 2);
         mAdapter = new CategoryProductAdapter(context);
@@ -99,6 +108,8 @@ public class CategoryProductView extends Fragment implements View.OnClickListene
         btnFilter.setOnClickListener(this);
         btnClose.setOnClickListener(this);
 
+        //lets try to put filter open-FF
+        FILTER_CHECK = mViewModel.getFilterCheckStatus();
 
         mViewModel.getCategoryProduct(productCategory).observe(this, new Observer<List<Product>>() {
             @Override
@@ -108,6 +119,7 @@ public class CategoryProductView extends Fragment implements View.OnClickListene
                 filterProduct.addAll(products);
             }
         });
+
 
         btnSortGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -141,6 +153,44 @@ public class CategoryProductView extends Fragment implements View.OnClickListene
 
             }
         });
+
+        Log.i(TAG, "filter check is "+filterCheck);
+        Log.i(TAG, "FILTER_CHECK is "+FILTER_CHECK);
+
+        if (filterCheck!= FILTER_CHECK){
+
+            mViewModel.getFilterDetailsForProductView().observe(this, new Observer<List<FilterDetailModel>>() {
+                @Override
+                public void onChanged(List<FilterDetailModel> filterDetailModels) {
+                    Log.i(TAG, "the filter detail model check ");
+                    //here i m declaring it else mNewFilterSearch array will get null exception if its get called without entring the filterDetailModel
+                    mNewFilterSearch = new ArrayList<>();
+                    if (filterDetailModels!=null){
+                        int detail_array_size = filterDetailModels.size();
+                        for (int i=0; i<detail_array_size; i++){
+                            if (filterDetailModels.get(i).getStatus()){
+                                mNewFilterSearch.add(new FilterDetailModel(filterDetailModels.get(i).getCategoryName(),
+                                        filterDetailModels.get(i).getType(), filterDetailModels.get(i).getItem()));
+//                                Log.i(TAG, "the fiter item is "+mNewFilterSearch.get(i).getItem());
+                            }
+                        }
+                        Log.i(TAG, "the size of mNewFilterSearch is "+mNewFilterSearch.size());
+
+
+
+//                        for (int i=0; i<mNewFilterSearch.size();i++){
+//                            Log.i(TAG, "category name "+mNewFilterSearch.get(i).getCategoryName()+", filter name "+
+//                                    mNewFilterSearch.get(i).getItem()+
+//                                    ", filter type "+mNewFilterSearch.get(i).getType());
+//                        }
+
+
+                    }
+
+
+                }
+            });
+        }
 
     }
 

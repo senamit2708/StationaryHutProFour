@@ -30,6 +30,8 @@ import androidx.recyclerview.widget.RecyclerView;
 public class FilterDetails extends Fragment implements FilterCheckedInterface {
 
     private static final String TAG = FilterDetails.class.getSimpleName();
+    private final int FILTER_CHECK= 52;
+
     private Context context;
 
     private RecyclerView mRecyclerView;
@@ -136,6 +138,7 @@ public class FilterDetails extends Fragment implements FilterCheckedInterface {
         btnApplyFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mViewModel.setFilterCheckStatus(FILTER_CHECK);
                 mViewModel.setIndexBoolean(indexbooleanStore);
                 mViewModel.setCompleteFilterCategory(filterDetailModels);
                 Navigation.findNavController(view).popBackStack(R.id.productFilter, true);

@@ -49,9 +49,9 @@ public class CategoryProductAdapter extends RecyclerView.Adapter<CategoryProduct
             holder.txtProductPrice.setText(Integer.toString(product.get(position).getProductPrice()));
             String imageUrl = product.get(position).getImageUrl();
             Picasso.with(context).load(imageUrl).into(holder.imageProduct);
-            Log.i(TAG, "the position is "+position);
-            Log.i(TAG, "the imageUrl is  "+imageUrl);
-            Log.i(TAG, "the product number is "+product.get(position).getProductNumber());
+//            Log.i(TAG, "the position is "+position);
+//            Log.i(TAG, "the imageUrl is  "+imageUrl);
+//            Log.i(TAG, "the product number is "+product.get(position).getProductNumber());
         }else {
             holder.txtProductNumber.setText("no product found");
             holder.txtProductName.setText("no product found");
@@ -95,7 +95,7 @@ public class CategoryProductAdapter extends RecyclerView.Adapter<CategoryProduct
             bundle = new Bundle();
             bundle.putString(PRODUCT_KEY, productId);
             bundle.putInt(PRODUCT_INDEX, clickedItemIndex);
-            Log.i(TAG, "inside createonclicklistener recycler adapter, productId is"+productId);
+//            Log.i(TAG, "inside createonclicklistener recycler adapter, productId is"+productId);
             Navigation.findNavController(view).navigate(R.id.action_categoryProductView_to_productDescription, bundle);
         }
     }

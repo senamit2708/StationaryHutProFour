@@ -74,4 +74,11 @@ public class NavDrawerStationaryItem extends Fragment implements ProductCategory
     public void funSetProductCategory(String productCategory) {
 //        mCategoryViewModel.setProductCategoryName(productCategory);
     }
+
+    @Override
+    public void funSetFilterCheck(int filter_check) {
+        mCategoryViewModel.setFilterCheckStatus(filter_check);
+    }
+
+
 }

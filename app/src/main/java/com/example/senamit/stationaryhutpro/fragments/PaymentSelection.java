@@ -23,6 +23,7 @@ import androidx.navigation.Navigation;
 public class PaymentSelection extends Fragment {
 
     private static final String TAG = PaymentSelection.class.getSimpleName();
+    private final int NEW_ORDER_CHECK=32;
     private Context context;
     private RadioGroup btnRadioPayment;
     private RadioButton btnCOD;
@@ -72,7 +73,9 @@ public class PaymentSelection extends Fragment {
 
                 if (btnCOD.getId()==selectedPaymentMethod){
                     Log.i(TAG, "the selected radio button is "+btnCOD.getText());
-                    Navigation.findNavController(view).navigate(R.id.action_paymentSelection_to_orderDetails);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("newOrderCheck", NEW_ORDER_CHECK);
+                    Navigation.findNavController(view).navigate(R.id.action_paymentSelection_to_orderDetails, bundle);
                 }
                 if (btnNetBanking.getId()==selectedPaymentMethod){
                     Log.i(TAG, "the selected radio button is net banking");
