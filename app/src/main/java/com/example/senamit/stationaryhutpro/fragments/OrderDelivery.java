@@ -10,11 +10,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.senamit.stationaryhutpro.R;
+import com.example.senamit.stationaryhutpro.activities.StationaryMainPage;
 import com.example.senamit.stationaryhutpro.adapters.DeliveryProductAdapter;
+import com.example.senamit.stationaryhutpro.interfaces.CheckInterneConnInterface;
 import com.example.senamit.stationaryhutpro.models.Address;
 import com.example.senamit.stationaryhutpro.models.UserCart;
 import com.example.senamit.stationaryhutpro.viewModels.ProductCartViewModel;
 import com.example.senamit.stationaryhutpro.viewModels.UserAddressViewModel;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -23,6 +26,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -59,6 +63,7 @@ public class OrderDelivery extends Fragment {
 
 
     private FirebaseUser mFirebaseUser;
+    ConstraintLayout mainView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,6 +100,8 @@ public class OrderDelivery extends Fragment {
         mAdapter = new DeliveryProductAdapter(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+
+        mainView = (ConstraintLayout) view.findViewById(R.id.constraint_main_layout);
 
 
         mViewModel.getCartData(mUserId).observe(this, new Observer<List<UserCart>>() {
@@ -149,17 +156,33 @@ public class OrderDelivery extends Fragment {
         btnPayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mViewModel.setOrderedProduct(userCartProduct);
-                Navigation.findNavController(view).navigate(R.id.action_orderDelivery_to_userAddressView);
+                if (((StationaryMainPage)getActivity()).checkInternetConnection()){
+                    mViewModel.setOrderedProduct(userCartProduct);
+                    Navigation.findNavController(view).navigate(R.id.action_orderDelivery_to_userAddressView);
+                }else {
+                    showSnackbar(mainView, R.string.internetIssue1, Snackbar.LENGTH_SHORT);
+                }
+
             }
         });
 
-//        btnAddress.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Navigation.findNavController(view).navigate(R.id.action_orderDelivery_to_userAddressView);
-//            }
-//        });
     }
+
+    //snackbar
+    public void showSnackbar(final View view, int message, int duration)
+    {
+        Snackbar snackbar = Snackbar.make(view, message, duration).setAction("RETRY", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar snackbar1 =Snackbar.make(view, R.string.internetIssue2, Snackbar.LENGTH_SHORT);
+                snackbar1.show();
+            }
+        });
+        snackbar.setActionTextColor(getResources().getColor(R.color.red));
+//        View snackView = snackbar.getView();
+        snackbar.show();
+
+    }
+
 
 }

@@ -17,10 +17,12 @@ import android.widget.TextView;
 import com.example.senamit.stationaryhutpro.CountDrawable;
 import com.example.senamit.stationaryhutpro.R;
 import com.example.senamit.stationaryhutpro.adapters.ProductForSaleAdapter;
+import com.example.senamit.stationaryhutpro.interfaces.CheckInterneConnInterface;
 import com.example.senamit.stationaryhutpro.models.Product;
 import com.example.senamit.stationaryhutpro.models.UserCart;
 import com.example.senamit.stationaryhutpro.viewModels.ProductCartViewModel;
 import com.example.senamit.stationaryhutpro.viewModels.ProductForSaleViewModel;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
@@ -28,13 +30,14 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ProductForSaleView extends Fragment {
+public class ProductForSaleView extends Fragment implements CheckInterneConnInterface {
 
     private static final String TAG = ProductForSaleView.class.getSimpleName();
 
@@ -44,6 +47,8 @@ public class ProductForSaleView extends Fragment {
 
     private Context context;
     private String mUserId;
+
+    ConstraintLayout mainView;
 
     private DatabaseReference mDatabase;
 
@@ -82,7 +87,7 @@ public class ProductForSaleView extends Fragment {
         Log.i(TAG, "the value of mViewModel is "+mViewModel);
         mRecyclerView = view.findViewById(R.id.recycler_product);
         mLayoutManager = new GridLayoutManager(context, 2);
-        mAdapter = new ProductForSaleAdapter(context);
+        mAdapter = new ProductForSaleAdapter(context, this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
@@ -90,7 +95,8 @@ public class ProductForSaleView extends Fragment {
         mRecyclerView.setDrawingCacheEnabled(true);
         mRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
-
+        //for snackbar getting the main view
+        mainView = (ConstraintLayout) view.findViewById(R.id.constraint_main_layout);
 
 
         mViewModel.getDataSnapshotLiveData().observe(this, new Observer<List<Product>>() {
@@ -146,4 +152,27 @@ public class ProductForSaleView extends Fragment {
     }
 
 
+    @Override
+    public void funLoadSnackBar(Boolean connCheck) {
+        if (connCheck==false){
+            showSnackbar(mainView, "No Internet Connection",Snackbar.LENGTH_SHORT);
+
+        }
+    }
+
+    //snackbar
+    public void showSnackbar(final View view, String message, int duration)
+    {
+        Snackbar snackbar = Snackbar.make(view, message, duration).setAction("RETRY", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar snackbar1 =Snackbar.make(view, "Sorry, No Connection", Snackbar.LENGTH_SHORT);
+                snackbar1.show();
+            }
+        });
+        snackbar.setActionTextColor(getResources().getColor(R.color.red));
+//        View snackView = snackbar.getView();
+        snackbar.show();
+
+    }
 }

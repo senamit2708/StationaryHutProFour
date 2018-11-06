@@ -3,6 +3,8 @@ package com.example.senamit.stationaryhutpro.activities
 
 import android.app.Activity
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -56,6 +58,8 @@ class StationaryMainPage : AppCompatActivity() {
         setupNavigationMenu(navController)
 
         mViewModel = ViewModelProviders.of(this).get(ProductCartViewModel::class.java)
+
+
     }
 
     private fun setupActionBar(navController: NavController) {
@@ -119,6 +123,12 @@ class StationaryMainPage : AppCompatActivity() {
         }
     }
 
-
+//for internet connection check
+     fun checkInternetConnection():Boolean{
+    val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+    val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
+    return isConnected
+}
 
 }

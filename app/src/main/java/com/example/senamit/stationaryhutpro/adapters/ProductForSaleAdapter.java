@@ -1,6 +1,8 @@
 package com.example.senamit.stationaryhutpro.adapters;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.senamit.stationaryhutpro.R;
+import com.example.senamit.stationaryhutpro.interfaces.CheckInterneConnInterface;
 import com.example.senamit.stationaryhutpro.models.Product;
 import com.squareup.picasso.Picasso;
 
@@ -30,10 +33,18 @@ public class ProductForSaleAdapter extends RecyclerView.Adapter<ProductForSaleAd
     String productId;
     Bundle bundle;
 
+    //for snackbar load in productForsale class
+    CheckInterneConnInterface mConnInterface;
+
     private static final String PRODUCT_KEY = "product_key";
 
     public ProductForSaleAdapter(Context context) {
         this.context = context;
+    }
+
+    public ProductForSaleAdapter(Context context, CheckInterneConnInterface mConnInterface) {
+        this.context = context;
+        this.mConnInterface = mConnInterface;
     }
 
     @NonNull
@@ -78,6 +89,16 @@ public class ProductForSaleAdapter extends RecyclerView.Adapter<ProductForSaleAd
         notifyDataSetChanged();
     }
 
+    public Boolean checkIntenet(){
+        ConnectivityManager cm =
+                (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        return isConnected;
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView txtProductNumber;
@@ -101,7 +122,13 @@ public class ProductForSaleAdapter extends RecyclerView.Adapter<ProductForSaleAd
             bundle.putString(PRODUCT_KEY, productId);
 //            bundle.putInt(PRODUCT_INDEX, clickedItemIndex);
             Log.i(TAG, "inside createonclicklistener recycler adapter, productId is"+productId);
-            Navigation.findNavController(view).navigate(R.id.action_productForSaleView_to_productDescription, bundle);
+            if (checkIntenet()){
+                Log.i(TAG, "internet is connected");
+                Navigation.findNavController(view).navigate(R.id.action_productForSaleView_to_productDescription, bundle);
+            }else {
+                mConnInterface.funLoadSnackBar(false);
+                Log.i(TAG, "Sorry u dont have internet connection");
+            }
         }
     }
 }

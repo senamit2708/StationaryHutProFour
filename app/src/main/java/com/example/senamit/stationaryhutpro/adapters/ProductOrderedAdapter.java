@@ -1,6 +1,8 @@
 package com.example.senamit.stationaryhutpro.adapters;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.senamit.stationaryhutpro.R;
+import com.example.senamit.stationaryhutpro.interfaces.CheckInterneConnInterface;
 import com.example.senamit.stationaryhutpro.interfaces.OrderedProductDescInterface;
 import com.example.senamit.stationaryhutpro.models.UserCart;
 import com.squareup.picasso.Picasso;
@@ -27,15 +30,17 @@ public class ProductOrderedAdapter extends RecyclerView.Adapter<ProductOrderedAd
     private List<UserCart> mOrderList = new ArrayList<>();
 
     private OrderedProductDescInterface orderedProductDescInterface;
+    private CheckInterneConnInterface mConnInterface;
 
 
     public ProductOrderedAdapter(Context context) {
         this.context = context;
     }
 
-    public ProductOrderedAdapter(Context context, OrderedProductDescInterface orderedProductDescInterface) {
+    public ProductOrderedAdapter(Context context, OrderedProductDescInterface orderedProductDescInterface, CheckInterneConnInterface mConnInterface) {
         this.context = context;
         this.orderedProductDescInterface = orderedProductDescInterface;
+        this.mConnInterface = mConnInterface;
     }
 
     @NonNull
@@ -116,12 +121,27 @@ public class ProductOrderedAdapter extends RecyclerView.Adapter<ProductOrderedAd
 
         @Override
         public void onClick(View view) {
-            int position = getAdapterPosition();
-            String cartProductFirebaseKey = mOrderList.get(position).getCartProductKey();
-            orderedProductDescInterface.funOrderdProductSelection(cartProductFirebaseKey);
-            Navigation.findNavController(view).navigate(R.id.action_orderDetails_to_orderedProductDescription);
+            if (checkIntenet()){
+                int position = getAdapterPosition();
+                String cartProductFirebaseKey = mOrderList.get(position).getCartProductKey();
+                orderedProductDescInterface.funOrderdProductSelection(cartProductFirebaseKey);
+                Navigation.findNavController(view).navigate(R.id.action_orderDetails_to_orderedProductDescription);
+            }else {
+                mConnInterface.funLoadSnackBar(false);
+            }
+
 
 
         }
+    }
+
+    public Boolean checkIntenet(){
+        ConnectivityManager cm =
+                (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        return isConnected;
     }
 }

@@ -1,6 +1,8 @@
 package com.example.senamit.stationaryhutpro.adapters;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.senamit.stationaryhutpro.R;
+import com.example.senamit.stationaryhutpro.interfaces.CheckInterneConnInterface;
 import com.example.senamit.stationaryhutpro.models.Product;
 import com.example.senamit.stationaryhutpro.models.UserCart;
 import com.squareup.picasso.Picasso;
@@ -32,13 +35,22 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
     private ButtonClickInterface btnClickinterface;
     private String productNumberCheck;
 
+    CheckInterneConnInterface mConnInterface;
+
+
     public CartProductAdapter(Context context) {
         this.context = context;
     }
 
-    public CartProductAdapter(Context context, ButtonClickInterface btnClickinterface) {
+//    public CartProductAdapter(Context context, ButtonClickInterface btnClickinterface) {
+//        this.context = context;
+//        this.btnClickinterface = btnClickinterface;
+//    }
+
+    public CartProductAdapter(Context context, ButtonClickInterface btnClickinterface, CheckInterneConnInterface mConnInterface) {
         this.context = context;
         this.btnClickinterface = btnClickinterface;
+        this.mConnInterface = mConnInterface;
     }
 
     @NonNull
@@ -128,14 +140,18 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
             String productNumber;
             switch (view.getId()){
                 case R.id.btnRemove:
-//                    Log.i(TAG, "inside button click ");
-                     position = getAdapterPosition();
-                     productNumber = cartProductList.get(position).getProductNumber();
-                    btnClickinterface.funRemoveBtnClick(productNumber, position);
+                    if (checkIntenet()){
+                        position = getAdapterPosition();
+                        productNumber = cartProductList.get(position).getProductNumber();
+                        btnClickinterface.funRemoveBtnClick(productNumber, position);
+                    }else {
+                        mConnInterface.funLoadSnackBar(false);
+                    }
+
                     break;
                 case R.id.btnQuantity:
-//                    Log.i(TAG, "inside the quantity button block");
                     position = getAdapterPosition();
+                    if (checkIntenet()){
                     productNumber = cartProductList.get(position).getProductNumber();
                   int quantity = Integer.parseInt(txtProductQA.getText().toString());
                   int price = Integer.parseInt(txtProductPrice.getText().toString());
@@ -159,8 +175,12 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
                       btnClickinterface.funAvailableQuantity(false);
 //                      Log.i(TAG, "sorry, we dont have such a huge number of products available");
                   }
-
-
+                    }else {
+                        int minimumOrder = cartProductList.get(position).getMinimumOrder();
+                        txtProductQA.setText(Integer.toString(minimumOrder));
+                        mConnInterface.funLoadSnackBar(false);
+                    }
+                    break;
                 default:
 //                    Log.i(TAG, "select any other option");
             }
@@ -172,6 +192,16 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
         void funRemoveBtnClick(String productNumber, int position);
         void funAddProductQuantity(String productNumber, int quantity,int minimumOrder, int price);
         void funAvailableQuantity(Boolean check);
+    }
+
+    public Boolean checkIntenet(){
+        ConnectivityManager cm =
+                (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        return isConnected;
     }
 
 }

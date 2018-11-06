@@ -1,5 +1,6 @@
 package com.example.senamit.stationaryhutpro.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -19,12 +20,14 @@ import android.widget.Toast;
 
 import com.example.senamit.stationaryhutpro.CountDrawable;
 import com.example.senamit.stationaryhutpro.R;
+import com.example.senamit.stationaryhutpro.activities.StationaryMainPage;
 import com.example.senamit.stationaryhutpro.models.Product;
 import com.example.senamit.stationaryhutpro.models.UserCart;
 import com.example.senamit.stationaryhutpro.viewModels.ProductCartViewModel;
 import com.example.senamit.stationaryhutpro.viewModels.ProductForSaleViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -44,6 +47,8 @@ import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -84,6 +89,8 @@ public class ProductDescription extends Fragment implements View.OnClickListener
 
     private boolean showToast = false;
     private int stock;
+    //for snackbar getting the view
+    ConstraintLayout mainView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -116,6 +123,8 @@ public class ProductDescription extends Fragment implements View.OnClickListener
         mProductImage = view.findViewById(R.id.imageProduct);
         mBtnAddToCart = view.findViewById(R.id.btnAddToCart);
         mBtnBuyNow = view.findViewById(R.id.btnBuyNow);
+        //for snackbar getting the main view
+        mainView = (ConstraintLayout) view.findViewById(R.id.constraint_main_layout);
 
         mBtnBuyNow.setOnClickListener(this);
         mBtnAddToCart.setOnClickListener(this);
@@ -171,12 +180,22 @@ public class ProductDescription extends Fragment implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btnAddToCart:
-                showToast = true;
-                pushProductToCart();
+                if (((StationaryMainPage)getActivity()).checkInternetConnection()){
+                    showToast = true;
+                    pushProductToCart();
+                    Log.i(TAG, "internet is connected");
+                }else {
+                    showSnackbar(mainView, "No Internet Connection",Snackbar.LENGTH_SHORT);
+                }
+
                 break;
             case R.id.btnBuyNow:
-                pushProductToCart();
-                Navigation.findNavController(view).navigate(R.id.action_productDescription_to_cartProduct);
+                if (((StationaryMainPage)getActivity()).checkInternetConnection()) {
+                    pushProductToCart();
+                    Navigation.findNavController(view).navigate(R.id.action_productDescription_to_cartProduct);
+                }else {
+                    showSnackbar(mainView, "No Internet Connection",Snackbar.LENGTH_SHORT);
+                }
 
             default:
                 Log.i(TAG, "Select any other click option");
@@ -265,6 +284,22 @@ public class ProductDescription extends Fragment implements View.OnClickListener
 
         icon.mutate();
         icon.setDrawableByLayerId(R.id.ic_group_count, badge);
+    }
+
+    //snackbar
+    public void showSnackbar(final View view, String message, int duration)
+    {
+        Snackbar snackbar = Snackbar.make(view, message, duration).setAction("RETRY", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar snackbar1 =Snackbar.make(view, "Sorry, No Connection", Snackbar.LENGTH_SHORT);
+                snackbar1.show();
+            }
+        });
+        snackbar.setActionTextColor(getResources().getColor(R.color.red));
+//        View snackView = snackbar.getView();
+        snackbar.show();
+
     }
 
 

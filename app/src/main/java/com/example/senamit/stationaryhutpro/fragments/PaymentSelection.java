@@ -14,9 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.senamit.stationaryhutpro.R;
+import com.example.senamit.stationaryhutpro.activities.StationaryMainPage;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -32,6 +35,8 @@ public class PaymentSelection extends Fragment {
     private Button btnContinue;
     private TextView txtStringOtp;
     private TextView txtPaymentGateway;
+
+    ConstraintLayout mainView;
 
     @Nullable
     @Override
@@ -60,35 +65,58 @@ public class PaymentSelection extends Fragment {
         txtStringOtp.setTypeface(customFont);
 //        txtPaymentGateway.setTypeface(customBoldFont);
 
-
+        //for snackbar getting the main view
+        mainView = (ConstraintLayout) view.findViewById(R.id.constraint_main_layout);
 
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int selectedPaymentMethod = btnRadioPayment.getCheckedRadioButtonId();
-                Log.i(TAG, "the selected radio button id is"+selectedPaymentMethod);
+                if (((StationaryMainPage)getActivity()).checkInternetConnection()){
+                    int selectedPaymentMethod = btnRadioPayment.getCheckedRadioButtonId();
+                    Log.i(TAG, "the selected radio button id is"+selectedPaymentMethod);
 
 
 
-                if (btnCOD.getId()==selectedPaymentMethod){
-                    Log.i(TAG, "the selected radio button is "+btnCOD.getText());
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("newOrderCheck", NEW_ORDER_CHECK);
-                    Navigation.findNavController(view).navigate(R.id.action_paymentSelection_to_orderDetails, bundle);
-                }
-                if (btnNetBanking.getId()==selectedPaymentMethod){
-                    Log.i(TAG, "the selected radio button is net banking");
-                    Toast.makeText(context, "Sorry Net Banking facility is not available",Toast.LENGTH_SHORT).show();
-                }
+                    if (btnCOD.getId()==selectedPaymentMethod){
+                        Log.i(TAG, "the selected radio button is "+btnCOD.getText());
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("newOrderCheck", NEW_ORDER_CHECK);
+                        Navigation.findNavController(view).navigate(R.id.action_paymentSelection_to_orderDetails, bundle);
+                    }
+                    if (btnNetBanking.getId()==selectedPaymentMethod){
+                        Log.i(TAG, "the selected radio button is net banking");
+                        Toast.makeText(context, "Sorry Net Banking facility is not available",Toast.LENGTH_SHORT).show();
+                    }
                     if (btnPhonePe.getId() ==selectedPaymentMethod){
-                    Toast.makeText(context, "Sorry PhonePe facility is not available",Toast.LENGTH_SHORT).show();
-                }
-                if (selectedPaymentMethod==0){
+                        Toast.makeText(context, "Sorry PhonePe facility is not available",Toast.LENGTH_SHORT).show();
+                    }
+                    if (selectedPaymentMethod==0){
                         Toast.makeText(context, "Please select any payment gateway",Toast.LENGTH_SHORT).show();
                     }
+                }else {
+                    showSnackbar(mainView, R.string.internetIssue1, Snackbar.LENGTH_SHORT);
+
+                }
+
             }
         });
+
+    }
+
+    //snackbar
+    public void showSnackbar(final View view, int message, int duration)
+    {
+        Snackbar snackbar = Snackbar.make(view, message, duration).setAction("RETRY", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar snackbar1 =Snackbar.make(view, R.string.internetIssue2, Snackbar.LENGTH_SHORT);
+                snackbar1.show();
+            }
+        });
+        snackbar.setActionTextColor(getResources().getColor(R.color.red));
+//        View snackView = snackbar.getView();
+        snackbar.show();
 
     }
 }

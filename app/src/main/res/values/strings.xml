@@ -6,4 +6,6 @@
     <string name="outOfStock">OUT OF STOCK</string>
     <string name="inStock">IN STOCK</string>
     <string name="textOtp">Pay using PhonePe/Net Banking is not active now</string>
+    <string name="internetIssue2">\"Sorry, No Connection\"</string>
+    <string name="internetIssue1">\"No Internet Connection\"</string>
 </resources>

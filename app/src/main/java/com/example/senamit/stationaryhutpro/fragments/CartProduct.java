@@ -14,9 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.senamit.stationaryhutpro.R;
+import com.example.senamit.stationaryhutpro.activities.StationaryMainPage;
 import com.example.senamit.stationaryhutpro.adapters.CartProductAdapter;
+import com.example.senamit.stationaryhutpro.interfaces.CheckInterneConnInterface;
 import com.example.senamit.stationaryhutpro.models.UserCart;
 import com.example.senamit.stationaryhutpro.viewModels.ProductCartViewModel;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -33,7 +36,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class CartProduct extends Fragment implements CartProductAdapter.ButtonClickInterface {
+public class CartProduct extends Fragment implements CartProductAdapter.ButtonClickInterface, CheckInterneConnInterface {
 
     private static final String TAG = CartProduct.class.getSimpleName();
 
@@ -65,6 +68,7 @@ public class CartProduct extends Fragment implements CartProductAdapter.ButtonCl
     private ProductCartViewModel mViewModel;
 
     private FirebaseUser mFirebaseUser;
+    ConstraintLayout mainView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -102,9 +106,12 @@ public class CartProduct extends Fragment implements CartProductAdapter.ButtonCl
 
         mRecyclerView = view.findViewById(R.id.recycler_cart);
         mLayoutManager = new LinearLayoutManager(context);
-        mAdapter = new CartProductAdapter(context, this);
+        mAdapter = new CartProductAdapter(context, this, this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+
+        //for snackbar getting the main view
+        mainView = (ConstraintLayout) view.findViewById(R.id.constraint_main_layout);
 
         customFont = Typeface.createFromAsset(context.getAssets(), "fonts/Rubik-Bold.ttf");
 
@@ -169,8 +176,13 @@ public class CartProduct extends Fragment implements CartProductAdapter.ButtonCl
         btnPayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mViewModel.setOrderedProduct(userCartProduct);
-                Navigation.findNavController(view).navigate(R.id.action_cartProduct_to_orderDelivery);
+                if (((StationaryMainPage)getActivity()).checkInternetConnection()){
+                    mViewModel.setOrderedProduct(userCartProduct);
+                    Navigation.findNavController(view).navigate(R.id.action_cartProduct_to_orderDelivery);
+                }else {
+                    showSnackbar(mainView, R.string.internetIssue1, Snackbar.LENGTH_SHORT);
+                }
+
             }
         });
 
@@ -218,6 +230,30 @@ public class CartProduct extends Fragment implements CartProductAdapter.ButtonCl
         final InputMethodManager inputManager = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
 
         inputManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), showKeyboard ? InputMethodManager.SHOW_FORCED : InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    @Override
+    public void funLoadSnackBar(Boolean connCheck) {
+        if (connCheck==false){
+            showSnackbar(mainView, R.string.internetIssue1, Snackbar.LENGTH_SHORT);
+            showSoftwareKeyboard(false);
+        }
+    }
+
+    //snackbar
+    public void showSnackbar(final View view, int message, int duration)
+    {
+        Snackbar snackbar = Snackbar.make(view, message, duration).setAction("RETRY", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar snackbar1 =Snackbar.make(view, R.string.internetIssue2, Snackbar.LENGTH_SHORT);
+                snackbar1.show();
+            }
+        });
+        snackbar.setActionTextColor(getResources().getColor(R.color.red));
+//        View snackView = snackbar.getView();
+        snackbar.show();
+
     }
 }
 

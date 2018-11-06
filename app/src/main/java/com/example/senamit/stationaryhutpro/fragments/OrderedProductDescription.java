@@ -10,15 +10,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.senamit.stationaryhutpro.R;
+import com.example.senamit.stationaryhutpro.activities.StationaryMainPage;
 import com.example.senamit.stationaryhutpro.models.Address;
 import com.example.senamit.stationaryhutpro.models.UserCart;
 import com.example.senamit.stationaryhutpro.viewModels.OrderedProductViewModel;
 import com.example.senamit.stationaryhutpro.viewModels.UsersAllOrdersViewModel;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -46,6 +49,7 @@ public class OrderedProductDescription extends Fragment {
     private ImageView imageProduct;
     private TextView txtAddress;
     private TextView txtPaymentMode;
+    private ConstraintLayout mainView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,6 +82,8 @@ public class OrderedProductDescription extends Fragment {
         txtAddress = view.findViewById(R.id.txtAddress);
         txtPaymentMode = view.findViewById(R.id.txtPaymentMode);
 
+        mainView = (ConstraintLayout) view.findViewById(R.id.constraint_main_layout);
+
         mViewModel.getSelectedCartProductForDesc(userId).observe(this, new Observer<UserCart>() {
          @Override
          public void onChanged(UserCart userCart) {
@@ -100,9 +106,16 @@ public class OrderedProductDescription extends Fragment {
     imageProduct.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Bundle bundle = new Bundle();
-            bundle.putString(PRODUCT_KEY, productNumber);
-            Navigation.findNavController(view).navigate(R.id.action_orderedProductDescription_to_productDescription,bundle);
+            if (((StationaryMainPage)getActivity()).checkInternetConnection()){
+                Bundle bundle = new Bundle();
+                bundle.putString(PRODUCT_KEY, productNumber);
+                Navigation.findNavController(view).navigate(R.id.action_orderedProductDescription_to_productDescription,bundle);
+
+            }else {
+                showSnackbar(mainView, "No Internet Connection",Snackbar.LENGTH_SHORT);
+
+            }
+
         }
     });
 
@@ -144,5 +157,20 @@ public class OrderedProductDescription extends Fragment {
         productNumber= userCart.getProductNumber();
     }
 
+    //snackbar
+    public void showSnackbar(final View view, String message, int duration)
+    {
+        Snackbar snackbar = Snackbar.make(view, message, duration).setAction("RETRY", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar snackbar1 =Snackbar.make(view, "Sorry, No Connection", Snackbar.LENGTH_SHORT);
+                snackbar1.show();
+            }
+        });
+        snackbar.setActionTextColor(getResources().getColor(R.color.red));
+//        View snackView = snackbar.getView();
+        snackbar.show();
+
+    }
 
 }
