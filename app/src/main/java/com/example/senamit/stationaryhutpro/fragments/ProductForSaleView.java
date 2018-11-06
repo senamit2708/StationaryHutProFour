@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.senamit.stationaryhutpro.CountDrawable;
 import com.example.senamit.stationaryhutpro.R;
+import com.example.senamit.stationaryhutpro.activities.StationaryMainPage;
 import com.example.senamit.stationaryhutpro.adapters.ProductForSaleAdapter;
 import com.example.senamit.stationaryhutpro.interfaces.CheckInterneConnInterface;
 import com.example.senamit.stationaryhutpro.models.Product;
@@ -48,13 +49,19 @@ public class ProductForSaleView extends Fragment implements CheckInterneConnInte
     private Context context;
     private String mUserId;
 
-    ConstraintLayout mainView;
+
 
     private DatabaseReference mDatabase;
 
     TextView txtProductName;
     TextView txtProductNumber;
     Button mBtnTest;
+
+    private ConstraintLayout mConstraint;
+    private ConstraintLayout mInternetConstraint;
+    private ConstraintLayout mainView;
+
+    private Button btnCheckInternet;
 
 
     private RecyclerView mRecyclerView;
@@ -97,6 +104,13 @@ public class ProductForSaleView extends Fragment implements CheckInterneConnInte
 
         //for snackbar getting the main view
         mainView = (ConstraintLayout) view.findViewById(R.id.constraint_main_layout);
+        mConstraint = view.findViewById(R.id.view_coordinate);
+        mInternetConstraint = view.findViewById(R.id.internet_constraint);
+        mInternetConstraint.setVisibility(View.GONE);
+
+        checkInternet();
+
+        btnCheckInternet = view.findViewById(R.id.btnCheckInternet);
 
 
         mViewModel.getDataSnapshotLiveData().observe(this, new Observer<List<Product>>() {
@@ -111,6 +125,24 @@ public class ProductForSaleView extends Fragment implements CheckInterneConnInte
         });
 
 
+        btnCheckInternet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (((StationaryMainPage)getActivity()).checkInternetConnection()){
+                    mInternetConstraint.setVisibility(View.GONE);
+                    mConstraint.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+    }
+
+    private void checkInternet() {
+        if (!((StationaryMainPage)getActivity()).checkInternetConnection()){
+            mConstraint.setVisibility(View.GONE);
+            mInternetConstraint.setVisibility(View.VISIBLE);
+
+        }
     }
 
     @Override
@@ -155,7 +187,9 @@ public class ProductForSaleView extends Fragment implements CheckInterneConnInte
     @Override
     public void funLoadSnackBar(Boolean connCheck) {
         if (connCheck==false){
-            showSnackbar(mainView, "No Internet Connection",Snackbar.LENGTH_SHORT);
+            mConstraint.setVisibility(View.GONE);
+            mInternetConstraint.setVisibility(View.VISIBLE);
+//            showSnackbar(mainView, "No Internet Connection",Snackbar.LENGTH_SHORT);
 
         }
     }
