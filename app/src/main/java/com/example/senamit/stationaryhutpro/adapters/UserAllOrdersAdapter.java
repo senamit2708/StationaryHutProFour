@@ -49,7 +49,7 @@ public class UserAllOrdersAdapter extends RecyclerView.Adapter<UserAllOrdersAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (orderList!=null){
             holder.txtProductNumber.setText(orderList.get(position).getProductNumber());
-            holder.txtProductPrice.setText(Integer.toString(orderList.get(position).getProductPrice()));
+            holder.txtProductPrice.setText(Double.toString(orderList.get(position).getProductPrice()));
             holder.txtProductName.setText(orderList.get(position).getProductName());
             holder.txtProductQuantity.setText(Integer.toString(orderList.get(position).getQuantity()));
             holder.txtProductOrderStatus.setText(orderList.get(position).getOrderStatus());
@@ -58,11 +58,11 @@ public class UserAllOrdersAdapter extends RecyclerView.Adapter<UserAllOrdersAdap
             holder.txtOrderNumber.setText(orderList.get(position).getOrderNumber());
             Picasso.with(context).load(orderList.get(position).getImageUrl()).fit().into(holder.imageProduct);
             int quantity = orderList.get(position).getQuantity();
-            int price = orderList.get(position).getProductPrice();
-            int totalPrice = (quantity * price);
+            double price = orderList.get(position).getProductPrice();
+            double totalPrice = (quantity * price);
             Log.i(TAG,"the total price is "+totalPrice);
             holder.txtTotalQuantity.setText("Total price of ("+quantity+" items)");
-            holder.txtTotalPrice.setText(Integer.toString(totalPrice));
+            holder.txtTotalPrice.setText(Double.toString(totalPrice));
         }
     }
 

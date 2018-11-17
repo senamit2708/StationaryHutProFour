@@ -3,7 +3,6 @@ package com.example.senamit.stationaryhutpro.adapters;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.senamit.stationaryhutpro.R;
 import com.example.senamit.stationaryhutpro.interfaces.CheckInterneConnInterface;
@@ -66,17 +64,17 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
         if (cartProductList!= null){
 //            Log.i(TAG, "inside onBindViewHolder "+cartProductList.get(position).getProductNumber());
             holder.txtProductNumber.setText(cartProductList.get(position).getProductNumber());
-            holder.txtProductPrice.setText(Integer.toString(cartProductList.get(position).getProductPrice()));
+            holder.txtProductPrice.setText(Double.toString(cartProductList.get(position).getProductPrice()));
             holder.txtProductName.setText(cartProductList.get(position).getProductName());
             holder.txtProductQA.setText(Integer.toString(cartProductList.get(position).getQuantity()));
             holder.txtMinimumQty.setText(Integer.toString(cartProductList.get(position).getMinimumOrder()));
             Picasso.with(context).load(cartProductList.get(position).getImageUrl()).into(holder.imageProduct);
             int quantity = cartProductList.get(position).getQuantity();
-            int price = cartProductList.get(position).getProductPrice();
-            int totalPrice = (quantity * price);
+            double price = cartProductList.get(position).getProductPrice();
+            double totalPrice = (quantity * price);
 //            Log.i(TAG,"the total price is "+totalPrice);
             holder.txtTotalQuantity.setText("Total price of ("+quantity+" items)");
-            holder.txtTotalPrice.setText(Integer.toString(totalPrice));
+            holder.txtTotalPrice.setText(Double.toString(totalPrice));
         }
 
         else {

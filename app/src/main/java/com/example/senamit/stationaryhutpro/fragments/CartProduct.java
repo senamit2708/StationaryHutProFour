@@ -23,6 +23,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -131,13 +132,13 @@ public class CartProduct extends Fragment implements CartProductAdapter.ButtonCl
                         Log.i(TAG, "the size of cart is "+userCarts.size());
                         mAdapter.setCartProduct(userCarts);
                         int size  = userCartProduct.size();
-                        int totalPrice =0;
+                        double totalPrice =0;
                         for (int i=0;i<size; i++){
                             int quantity = userCartProduct.get(i).getQuantity();
                             //i think here issue occurs if internet is slow...cross check i have to do here
                             //i m thinking to use try catch block or something else...
-                            int productPrice = userCartProduct.get(i).getProductPrice();
-                            int price = quantity * productPrice;
+                            double productPrice = userCartProduct.get(i).getProductPrice();
+                            double price = quantity * productPrice;
                             totalPrice= totalPrice+price;
 
                         }
@@ -145,9 +146,10 @@ public class CartProduct extends Fragment implements CartProductAdapter.ButtonCl
                         txtItemFinalPrice.setText(String.valueOf(totalPrice));
                         if (totalPrice<minTotalPrice){
                             txtDeliveryPrice.setText(String.valueOf(deliveryCharge));
-                            int total = totalPrice+deliveryCharge;
-                            txtTotalPrice.setText(String.valueOf(total));
-                            txtFinalPrice.setText(String.valueOf(total));
+                            double total = totalPrice+deliveryCharge;
+                            DecimalFormat df = new DecimalFormat("#.##");
+                            txtTotalPrice.setText(String.valueOf(df.format(total)));
+                            txtFinalPrice.setText(String.valueOf(df.format(total)));
                             txtShippingHint.setText("Total price above "+getString(R.string.Rs)+""+minTotalPrice+" is of free delivery");
 //                            txtShippingHint.setVisibility(View.VISIBLE);
                         }else {

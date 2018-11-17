@@ -11,7 +11,7 @@ public class UserCart {
 
     private String productNumber;
     private String date;
-    private int productPrice;
+    private double productPrice;
     private String productName;
     private String imageUrl;
     private int quantity;
@@ -42,7 +42,8 @@ public class UserCart {
 //        this.minimumOrder = minimumOrder;
     }
 
-    public UserCart(String productNumber, String date, int productPrice, String productName, String imageUrl, int quantity ) {
+    //this constructor is used in product description
+    public UserCart(String productNumber, String date, double productPrice, String productName, String imageUrl, int quantity ) {
         this.productNumber = productNumber;
         this.date = date;
         this.productPrice = productPrice;
@@ -98,11 +99,11 @@ public class UserCart {
         this.date = date;
     }
 
-    public int getProductPrice() {
+    public double getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(int productPrice) {
+    public void setProductPrice(double productPrice) {
         this.productPrice = productPrice;
     }
 

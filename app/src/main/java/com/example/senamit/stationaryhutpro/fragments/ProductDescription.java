@@ -1,6 +1,5 @@
 package com.example.senamit.stationaryhutpro.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -48,7 +47,6 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -64,7 +62,7 @@ public class ProductDescription extends Fragment implements View.OnClickListener
     private Context context;
     private String mProductNumber;
     private String mProductName;
-    private int mProductPrice;
+    private double mProductPrice;
     private String mImageUrl;
 //    private int clickedItemIndex;
     private Product product;
@@ -153,7 +151,7 @@ public class ProductDescription extends Fragment implements View.OnClickListener
                     mMinimumOrder = product.getMinimumOrder();
                     stock = product.getProductQuantity();
                     mTxtProductName.setText(product.getProductName());
-                    mTxtProductPrice.setText(Integer.toString(product.getProductPrice()));
+                    mTxtProductPrice.setText(Double.toString(product.getProductPrice()));
                     mTxtProductNumber.setText(product.getProductNumber());
                     //showing instock and out of stock option
                     if (stock>0){

@@ -11,13 +11,13 @@ public class Product {
 
     String productName;
     String productNumber;
-    int productPrice;
+    double productPrice;
     String imageUrl;
     String category;
     int minimumOrder;
     int productQuantity;
 
-    public Product(String productName, String productNumber, int productPrice, String imageUrl) {
+    public Product(String productName, String productNumber, Double productPrice, String imageUrl) {
         this.productName = productName;
         this.productNumber = productNumber;
         this.productPrice = productPrice;
@@ -26,7 +26,7 @@ public class Product {
     }
 
     //in product description i m using this..
-    public Product(String productName, String productNumber, int productPrice, String imageUrl,
+    public Product(String productName, String productNumber, Double productPrice, String imageUrl,
                    int minimumOrder, int productQuantity) {
         this.productName = productName;
         this.productNumber = productNumber;
@@ -37,7 +37,7 @@ public class Product {
 
     }
 
-    public Product(String productName, String productNumber, int productPrice, String imageUrl, String category) {
+    public Product(String productName, String productNumber, Double productPrice, String imageUrl, String category) {
         this.productName = productName;
         this.productNumber = productNumber;
         this.productPrice = productPrice;
@@ -46,7 +46,7 @@ public class Product {
     }
 
     //for getting price and available quantity from productcartviewmodel
-    public Product(int productPrice, int availableQuantity) {
+    public Product(Double productPrice, int availableQuantity) {
         this.productPrice = productPrice;
         this.productQuantity = availableQuantity;
     }
@@ -70,11 +70,11 @@ public class Product {
         this.productNumber = productNumber;
     }
 
-    public int getProductPrice() {
+    public double getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(int productPrice) {
+    public void setProductPrice(double productPrice) {
         this.productPrice = productPrice;
     }
 

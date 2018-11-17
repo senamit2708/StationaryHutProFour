@@ -60,7 +60,7 @@ public class ProductForSaleAdapter extends RecyclerView.Adapter<ProductForSaleAd
         if (product!= null){
             holder.txtProductNumber.setText(product.get(position).getProductNumber());
             holder.txtProductName.setText(product.get(position).getProductName());
-            holder.txtProductPrice.setText(Integer.toString(product.get(position).getProductPrice()));
+            holder.txtProductPrice.setText(Double.toString(product.get(position).getProductPrice()));
             String imageUrl = product.get(position).getImageUrl();
             Picasso.with(context).load(imageUrl)
                     .placeholder(R.color.placeHolderTwo).into(holder.imageProduct);

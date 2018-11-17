@@ -97,13 +97,13 @@ class StationaryMainPage : AppCompatActivity() {
 
     }
 
-
-
+    //hide keyboard
     fun hideSoftKeyboard(view: View) {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0)
     }
 
+    //hide keyboard
     fun hideKeyboard(activity: Activity) {
         val inputManager = activity
                 .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -115,6 +115,7 @@ class StationaryMainPage : AppCompatActivity() {
         }
     }
 
+    //for getting the userId
     fun getUserId():String{
         if (FirebaseAuth.getInstance().uid == null){
             return FirebaseAuth.getInstance().uid.toString()
